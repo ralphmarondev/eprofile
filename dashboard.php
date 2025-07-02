@@ -1,6 +1,5 @@
 <?php
-// Get current page from URL (?page=...)
-$page = $_GET['page'] ?? 'home';
+$page = $_GET['page'] ?? 'dashboard';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,6 +34,11 @@ $page = $_GET['page'] ?? 'home';
         background: #f8f9fa;
       }
     }
+
+    .accordion-button {
+      font-size: 1rem;
+      padding-left: 0.75rem !important;
+    }
   </style>
 </head>
 
@@ -46,31 +50,38 @@ $page = $_GET['page'] ?? 'home';
       <h4 class="mb-4">Dashboard</h4>
       <ul class="nav flex-column">
         <li class="nav-item mb-2">
-          <a class="nav-link <?= $page === 'home' ? 'active' : '' ?>" href="?page=home">🏠 Home</a>
+          <a class="nav-link <?= $page === 'dashboard' ? 'active' : '' ?>" href="?page=dashboard">📋 Dashboard</a>
         </li>
+
+        <!-- Residents Dropdown -->
         <li class="nav-item mb-2">
-          <a class="nav-link <?= $page === 'reports' ? 'active' : '' ?>" href="?page=reports">📊 Reports</a>
-        </li>
-        <!-- Expandable section -->
-        <li class="nav-item mb-2">
-          <div class="accordion" id="accordionSidebar">
+          <div class="accordion" id="accordionResidents">
             <div class="accordion-item border-0">
-              <h2 class="accordion-header" id="headingSettings">
-                <button class="accordion-button collapsed p-2 bg-light" type="button" data-bs-toggle="collapse"
-                  data-bs-target="#collapseSettings">
-                  ⚙️ Settings
+              <h2 class="accordion-header" id="headingResidents">
+                <button class="accordion-button collapsed bg-light p-2 text-start" type="button"
+                  data-bs-toggle="collapse" data-bs-target="#collapseResidents" style="box-shadow: none;">
+                  🏘️ Residents
                 </button>
               </h2>
-              <div id="collapseSettings" class="accordion-collapse collapse">
+              <div id="collapseResidents"
+                class="accordion-collapse collapse <?= in_array($page, ['resident-list', 'new-resident']) ? 'show' : '' ?>">
                 <div class="accordion-body py-1 px-2">
                   <ul class="nav flex-column">
-                    <li><a class="nav-link small <?= $page === 'profile' ? 'active' : '' ?>" href="?page=profile">👤 Profile</a></li>
-                    <li><a class="nav-link small <?= $page === 'security' ? 'active' : '' ?>" href="?page=security">🔒 Security</a></li>
+                    <li><a class="nav-link small <?= $page === 'resident-list' ? 'active' : '' ?>"
+                        href="?page=resident-list">📑 Resident List</a></li>
+                    <li><a class="nav-link small <?= $page === 'new-resident' ? 'active' : '' ?>"
+                        href="?page=new-resident">➕ New Resident</a></li>
                   </ul>
                 </div>
               </div>
             </div>
           </div>
+        </li>
+
+        <!-- Beneficiaries -->
+        <li class="nav-item mb-2">
+          <a class="nav-link <?= $page === 'beneficiaries' ? 'active' : '' ?>" href="?page=beneficiaries">🤝
+            Beneficiaries</a>
         </li>
       </ul>
     </div>
@@ -93,7 +104,9 @@ $page = $_GET['page'] ?? 'home';
           </a>
           <ul class="dropdown-menu dropdown-menu-end">
             <li class="dropdown-header" id="usernameDropdown">Loading...</li>
-            <li><hr class="dropdown-divider"></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
             <li><a class="dropdown-item text-danger" href="logout.php">🚪 Logout</a></li>
           </ul>
         </div>
@@ -101,19 +114,26 @@ $page = $_GET['page'] ?? 'home';
 
       <!-- Page Content -->
       <div class="p-4" id="pageContent">
-        <!-- Content loaded dynamically by PHP -->
-        <?php if ($page === 'home'): ?>
-          <h2>🏠 Home</h2>
+        <?php
+        // Redirect "residents" to resident-list
+        if ($page === 'residents') {
+          header("Location: ?page=resident-list");
+          exit;
+        }
+        ?>
+
+        <?php if ($page === 'dashboard'): ?>
+          <h2>📋 Dashboard</h2>
           <p>Welcome to your dashboard, <span id="usernameWelcome">Loading...</span>!</p>
-        <?php elseif ($page === 'reports'): ?>
-          <h2>📊 Reports</h2>
-          <p>This is where your reports will show.</p>
-        <?php elseif ($page === 'profile'): ?>
-          <h2>👤 Profile</h2>
-          <p>Edit your profile info here.</p>
-        <?php elseif ($page === 'security'): ?>
-          <h2>🔒 Security</h2>
-          <p>Manage your password and 2FA settings.</p>
+        <?php elseif ($page === 'resident-list'): ?>
+          <h2>📑 Resident List</h2>
+          <p>List of all registered residents will appear here.</p>
+        <?php elseif ($page === 'new-resident'): ?>
+          <h2>➕ New Resident</h2>
+          <p>Form to add new resident details.</p>
+        <?php elseif ($page === 'beneficiaries'): ?>
+          <h2>🤝 Beneficiaries</h2>
+          <p>Information about beneficiaries will appear here.</p>
         <?php else: ?>
           <h2>❓ Unknown Page</h2>
           <p>The page “<?= htmlspecialchars($page) ?>” does not exist.</p>
@@ -127,7 +147,6 @@ $page = $_GET['page'] ?? 'home';
       document.getElementById("sidebar").classList.toggle("show");
     }
 
-    // Populate user data from localStorage
     const email = localStorage.getItem('user_email') || 'Guest';
     document.getElementById('usernameDisplay').textContent = email;
     document.getElementById('usernameDropdown').textContent = email;
