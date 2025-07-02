@@ -126,7 +126,7 @@
 		});
 
 		goToDashboard.addEventListener('click', function () {
-			window.location.href = 'dashboard.php';
+			window.location.href = 'home.php';
 		});
 	</script>
 </body>

@@ -6,7 +6,7 @@ $page = $_GET['page'] ?? 'dashboard';
 
 <head>
   <meta charset="UTF-8">
-  <title>Dashboard 💼</title>
+  <title>EProfile</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -120,25 +120,20 @@ $page = $_GET['page'] ?? 'dashboard';
           header("Location: ?page=resident-list");
           exit;
         }
-        ?>
 
-        <?php if ($page === 'dashboard'): ?>
-          <h2>📋 Dashboard</h2>
-          <p>Welcome to your dashboard, <span id="usernameWelcome">Loading...</span>!</p>
-        <?php elseif ($page === 'resident-list'): ?>
-          <h2>📑 Resident List</h2>
-          <p>List of all registered residents will appear here.</p>
-        <?php elseif ($page === 'new-resident'): ?>
-          <h2>➕ New Resident</h2>
-          <p>Form to add new resident details.</p>
-        <?php elseif ($page === 'beneficiaries'): ?>
-          <h2>🤝 Beneficiaries</h2>
-          <p>Information about beneficiaries will appear here.</p>
-        <?php else: ?>
-          <h2>❓ Unknown Page</h2>
-          <p>The page “<?= htmlspecialchars($page) ?>” does not exist.</p>
-        <?php endif; ?>
+        // Define safe/allowed pages
+        $allowedPages = ['dashboard', 'resident-list', 'new-resident', 'beneficiaries'];
+
+        // Default to 404 if not allowed
+        $pageFile = in_array($page, $allowedPages)
+          ? "pages/$page.php"
+          : "pages/404.php";
+
+        // Inject the page
+        include $pageFile;
+        ?>
       </div>
+
     </div>
   </div>
 
