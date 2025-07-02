@@ -21,17 +21,18 @@ CREATE DATABASE residents_db;
 
 ---
 
-## 👤 Step 2: Create `users` Table in `login_system`
+## 👤 Step 2: Create `users` Table in `eprofile_db`
 
 This table is used for login authentication.
 
 ```sql
-USE login_system;
+USE eprofile_db;
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(100) NOT NULL
 );
 ```
 

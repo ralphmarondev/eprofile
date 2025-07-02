@@ -1,8 +1,8 @@
 <?php
 include './connection.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	if (isset($_POST['role']) && isset($_POST['email']) && isset($_POST['password'])) {
-		$role = $_POST['role'];
+	if (isset($_POST['email']) && isset($_POST['password'])) {
+		$role = 'user'; // default :)
 		$email = $_POST['email'];
 		$password = $_POST['password'];
 

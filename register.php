@@ -13,10 +13,10 @@
 	<div class="container d-flex justify-content-center align-items-center h-100">
 		<div class="card shadow-lg border-0 p-4 rounded-4" style="max-width: 400px; width: 100%;">
 			<h3 class="text-center mb-4 text-primary-emphasis">Create an Account</h3>
-			<form method="post" action="">
+			<form method="post" action="api/register.php">
 				<div class="mb-3">
-					<label for="username" class="form-label">Username</label>
-					<input type="text" class="form-control form-control-lg" id="username" name="username" required>
+					<label for="email" class="form-label">Email</label>
+					<input type="email" class="form-control form-control-lg" id="email" name="email" required>
 				</div>
 				<div class="mb-4">
 					<label for="password" class="form-label">Password</label>
