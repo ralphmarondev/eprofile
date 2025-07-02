@@ -1,3 +1,7 @@
+<?php
+// Get current page from URL (?page=...)
+$page = $_GET['page'] ?? 'home';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -60,10 +64,8 @@
               <div id="collapseSettings" class="accordion-collapse collapse">
                 <div class="accordion-body py-1 px-2">
                   <ul class="nav flex-column">
-                    <li><a class="nav-link small <?= $page === 'profile' ? 'active' : '' ?>" href="?page=profile">👤
-                        Profile</a></li>
-                    <li><a class="nav-link small <?= $page === 'security' ? 'active' : '' ?>" href="?page=security">🔒
-                        Security</a></li>
+                    <li><a class="nav-link small <?= $page === 'profile' ? 'active' : '' ?>" href="?page=profile">👤 Profile</a></li>
+                    <li><a class="nav-link small <?= $page === 'security' ? 'active' : '' ?>" href="?page=security">🔒 Security</a></li>
                   </ul>
                 </div>
               </div>
@@ -87,23 +89,22 @@
                 d="M13.468 12.37C12.758 11.226 11.479 10.5 10 10.5c-1.48 0-2.758.726-3.468 1.87A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z" />
               <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 7a7 7 0 1 0 0-14 7 7 0 0 0 0 14z" />
             </svg>
-            <span class="d-none d-md-inline"><?= htmlspecialchars($username) ?></span>
+            <span class="d-none d-md-inline" id="usernameDisplay">Loading...</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-end">
-            <li class="dropdown-header"><?= htmlspecialchars($username) ?></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
+            <li class="dropdown-header" id="usernameDropdown">Loading...</li>
+            <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item text-danger" href="logout.php">🚪 Logout</a></li>
           </ul>
         </div>
       </nav>
 
       <!-- Page Content -->
-      <div class="p-4">
+      <div class="p-4" id="pageContent">
+        <!-- Content loaded dynamically by PHP -->
         <?php if ($page === 'home'): ?>
           <h2>🏠 Home</h2>
-          <p>Welcome to your dashboard, <?= htmlspecialchars($username) ?>!</p>
+          <p>Welcome to your dashboard, <span id="usernameWelcome">Loading...</span>!</p>
         <?php elseif ($page === 'reports'): ?>
           <h2>📊 Reports</h2>
           <p>This is where your reports will show.</p>
@@ -124,6 +125,16 @@
   <script>
     function toggleSidebar() {
       document.getElementById("sidebar").classList.toggle("show");
+    }
+
+    // Populate user data from localStorage
+    const email = localStorage.getItem('user_email') || 'Guest';
+    document.getElementById('usernameDisplay').textContent = email;
+    document.getElementById('usernameDropdown').textContent = email;
+
+    const usernameWelcome = document.getElementById('usernameWelcome');
+    if (usernameWelcome) {
+      usernameWelcome.textContent = email;
     }
   </script>
 
