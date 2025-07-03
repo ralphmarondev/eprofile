@@ -213,8 +213,7 @@
 					</div>
 					<div class="mb-3 col-md-12">
 						<label class="form-label">Profile Picture</label>
-						<input type="file" class="form-control" id="pictureInput" accept="image/*">
-						<input type="hidden" name="picture" id="pictureData">
+						<input type="file" class="form-control" name="picture" id="pictureInput" accept="image/*" required>
 						<div class="mt-3 text-center">
 							<img id="picturePreview" src="" alt="Preview"
 								style="max-width: 150px; max-height: 150px; display: none; border-radius: 8px; border: 1px solid #ccc;" />
@@ -321,18 +320,12 @@
 
 	const pictureInput = document.getElementById('pictureInput');
 	const picturePreview = document.getElementById('picturePreview');
-	const pictureData = document.getElementById('pictureData');
 
 	pictureInput.addEventListener('change', function () {
 		const file = this.files[0];
 		if (file) {
-			const reader = new FileReader();
-			reader.onload = function (e) {
-				picturePreview.src = e.target.result;
-				picturePreview.style.display = 'block';
-				pictureData.value = e.target.result; // Save base64 to hidden input
-			};
-			reader.readAsDataURL(file);
+			picturePreview.src = URL.createObjectURL(file);
+			picturePreview.style.display = 'block';
 		}
 	});
 </script>

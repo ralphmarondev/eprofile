@@ -1,15 +1,16 @@
 <?php
 include 'connection.php';
-
 header('Content-Type: application/json');
 
+// Only allow POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => '0', 'error' => 'Invalid request method']);
     exit;
 }
 
 // Extract and sanitize input
-function sanitize($key) {
+function sanitize($key)
+{
     return isset($_POST[$key]) ? trim($_POST[$key]) : '';
 }
 
@@ -29,31 +30,70 @@ $motherName = sanitize('motherName');
 $fatherName = sanitize('fatherName');
 $voter = sanitize('voter');
 $is_beneficiary = sanitize('is_beneficiary');
-$categories = sanitize('beneficiary'); // comma-separated list
+$categories = sanitize('beneficiary'); // comma-separated
 $barangay = sanitize('barangay');
 $street = sanitize('street');
 $email = sanitize('email');
 $contact_number = sanitize('contact_number');
-$picture = sanitize('picture');
 
+// Validate required fields
 if ($first_name === '' || $last_name === '' || $gender === '' || $birthday === '') {
     echo json_encode(['success' => '0', 'error' => 'Missing required fields']);
     exit;
 }
 
+// Handle picture upload
+$picture_path = '';
+if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) {
+    $uploadDir = '../data/uploads/';
+    $fileTmp = $_FILES['picture']['tmp_name'];
+    $fileExt = pathinfo($_FILES['picture']['name'], PATHINFO_EXTENSION);
+    $fileName = uniqid('profile_', true) . '.' . strtolower($fileExt);
+    $destination = $uploadDir . $fileName;
+
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+
+    if (move_uploaded_file($fileTmp, $destination)) {
+        $picture_path = 'data/uploads/' . $fileName; // relative path to store in DB
+    } else {
+        echo json_encode(['success' => '0', 'error' => 'Failed to move uploaded file']);
+        exit;
+    }
+}
+
 try {
     $sql = $mysqli->prepare("INSERT INTO residents (
-        first_name, middle_name, last_name, suffix, gender, birthday, b_place, civil_status, citizen,
-        religion, height, weight, motherName, fatherName, voter, beneficiary, categories,
-        barangay, street, contact_number, email, picture
+        first_name, middle_name, last_name, suffix, gender, birthday, b_place, civil_status,
+        citizen, religion, height, weight, motherName, fatherName, voter, beneficiary,
+        categories, barangay, street, contact_number, email, picture
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     $sql->bind_param(
         "ssssssssssssssssssssss",
-        $first_name, $middle_name, $last_name, $suffix, $gender, $birthday, $b_place,
-        $civil_status, $citizen, $religion, $height, $weight, $motherName, $fatherName,
-        $voter, $is_beneficiary, $categories, $barangay, $street, $contact_number,
-        $email, $picture
+        $first_name,
+        $middle_name,
+        $last_name,
+        $suffix,
+        $gender,
+        $birthday,
+        $b_place,
+        $civil_status,
+        $citizen,
+        $religion,
+        $height,
+        $weight,
+        $motherName,
+        $fatherName,
+        $voter,
+        $is_beneficiary,
+        $categories,
+        $barangay,
+        $street,
+        $contact_number,
+        $email,
+        $picture_path
     );
 
     if ($sql->execute()) {
