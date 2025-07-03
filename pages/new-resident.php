@@ -227,6 +227,21 @@
 			</div>
 		</form>
 	</div>
+
+	<div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered text-center">
+			<div class="modal-content p-3">
+				<div class="modal-header border-0">
+					<h5 class="modal-title" id="qrModalLabel">🎉 Resident Registered</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p>Here is their unique QR code:</p>
+					<img id="qrImage" src="" style="max-width: 200px;" />
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <style>
@@ -289,7 +304,28 @@
 			.then(res => res.json())
 			.then(data => {
 				if (data.success === "1") {
-					alert("🎉 Resident added successfully!");
+					const residentId = data.id;
+					const canvas = document.createElement("canvas");
+
+					QRCode.toCanvas(canvas, String(residentId), async function (err) {
+						const imageData = canvas.toDataURL("image/png");
+
+						const response = await fetch('api/save_qrcode.php', {
+							method: "POST",
+							headers: { "Content-Type": "application/json" },
+							body: JSON.stringify({ image: imageData, value: residentId })
+						});
+
+						const qrData = await response.json();
+						if (qrData.success) {
+							// 🪄 Show modal with QR code
+							document.getElementById('qrImage').src = imageData;
+							new bootstrap.Modal(document.getElementById('qrModal')).show();
+						} else {
+							alert("QR saving failed.");
+						}
+					});
+
 					this.reset();
 					currentStep = 1;
 					showStep(currentStep);

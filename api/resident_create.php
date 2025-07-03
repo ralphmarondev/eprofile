@@ -97,7 +97,7 @@ try {
     );
 
     if ($sql->execute()) {
-        echo json_encode(['success' => '1']);
+        echo json_encode(['success' => '1', 'id' => $mysqli->insert_id]);
     } else {
         echo json_encode(['success' => '0', 'error' => $sql->error]);
     }
