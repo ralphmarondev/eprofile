@@ -17,7 +17,7 @@ This guide will walk you through setting up the necessary MySQL databases and ta
 ```sql
 CREATE DATABASE login_system;
 CREATE DATABASE residents_db;
-````
+```
 
 ---
 
@@ -36,16 +36,16 @@ CREATE TABLE users (
 );
 ```
 
-> 💡 You can use `MD5()` for now or switch to `password_hash()` in PHP for more secure password handling.
+> 💡 We use `password_hash()` in PHP for more secure password handling.
 
 ---
 
-## 🏠 Step 3: Create `residents` Table in `residents_db`
+## 🏠 Step 3: Create `residents` Table in `eprofile_db`
 
 This table stores the full profile data for residents.
 
 ```sql
-USE residents_db;
+USE eprofile_db;
 
 CREATE TABLE residents (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -81,7 +81,7 @@ CREATE TABLE residents (
 ### Sample Admin User
 
 ```sql
-USE login_system;
+USE eprofile_db;
 
 INSERT INTO users (username, password)
 VALUES ('admin', MD5('admin123'));
@@ -91,5 +91,5 @@ VALUES ('admin', MD5('admin123'));
 
 ## ✅ You're Done!
 
-* Login logic should use the `users` table from `login_system`.
-* Resident profile data should be saved in the `residents` table under `residents_db`.
+- Login logic should use the `users` table from `eprofile_db`.
+- Resident profile data should be saved in the `residents` table under `eprofile_db`.
