@@ -13,7 +13,9 @@
       </tr>
     </thead>
     <tbody id="residentTableBody">
-      <tr><td colspan="5">Loading...</td></tr>
+      <tr>
+        <td colspan="5">Loading...</td>
+      </tr>
     </tbody>
   </table>
 </div>
@@ -34,7 +36,7 @@
             <td>${r.civil_status}</td>
             <td>${r.email}</td>
             <td>
-              <a href="?page=edit-resident&id=${r.id}" class="btn btn-sm btn-warning">Edit</a>
+              <a href="?page=view-resident&id=${r.id}" class="btn btn-sm btn-success">View</a>
               <a href="?page=update-resident&id=${r.id}" class="btn btn-sm btn-primary">Update</a>
               <a href="api/delete_resident.php?id=${r.id}" class="btn btn-sm btn-danger"
                  onclick="return confirm('Are you sure you want to delete this resident?');">Delete</a>
