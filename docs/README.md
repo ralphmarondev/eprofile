@@ -15,8 +15,7 @@ This guide will walk you through setting up the necessary MySQL databases and ta
 ## 🛠️ Step 1: Create the Databases
 
 ```sql
-CREATE DATABASE login_system;
-CREATE DATABASE residents_db;
+CREATE DATABASE eprofile_db;
 ```
 
 ---
@@ -84,7 +83,7 @@ CREATE TABLE residents (
 USE eprofile_db;
 
 INSERT INTO users (username, password)
-VALUES ('admin', MD5('admin123'));
+VALUES ('admin', password_hash('admin123'));
 ```
 
 ---
