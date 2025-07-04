@@ -1,15 +1,15 @@
-<h2>Resident List</h2>
+<h3 class="step-title">Resident List</h3>
 <p>List of all registered residents will appear below.</p>
 
 <div class="table-responsive">
   <table class="table table-bordered table-hover align-middle">
     <thead class="table-light">
       <tr>
-        <th>#</th>
-        <th>Full Name</th>
-        <th>Civil Status</th>
-        <th>Email</th>
-        <th>Actions</th>
+        <th style="width: 5%;">#</th>
+        <th style="width: 32%;">Full Name</th>
+        <th style="width: 18%;">Civil Status</th>
+        <th style="width: 25%;">Email</th>
+        <th style="width: 20%;" class="text-center">Actions</th>
       </tr>
     </thead>
     <tbody id="residentTableBody">
@@ -163,6 +163,70 @@
   </div>
 </div>
 
+<!-- Delete Resident Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+  aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+    <div class="modal-content rounded-4 cute-modal">
+      <div class="modal-header cute-modal-header">
+        <h5 class="modal-title" id="viewModalLabel">Delete Resident</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-section form-section-basic">
+          <h5 class="text-muted">Are you sure you want to delete this resident? This action cannot be undone.</h5>
+          <hr>
+          <div class="row">
+            <div class="mb-3 col-md-6">
+              <label class="form-label">First Name</label>
+              <input type="text" class="form-control" name="delete_first_name" id="delete_first_name"
+                placeholder="Enter first name" readonly>
+            </div>
+            <div class="mb-3 col-md-6">
+              <label class="form-label">Middle Name</label>
+              <input type="text" class="form-control" name="delete_middle_name" id="delete_middle_name"
+                placeholder="Enter middle name" readonly>
+            </div>
+            <div class="mb-3 col-md-6">
+              <label class="form-label">Last Name</label>
+              <input type="text" class="form-control" name="delete_last_name" id="delete_last_name"
+                placeholder="Enter last name" readonly>
+            </div>
+            <div class="mb-3 col-md-6">
+              <label class="form-label">Suffix</label>
+              <input type="text" class="form-control" name="delete_suffix" id="delete_suffix" placeholder="Enter suffix"
+                readonly>
+            </div>
+            <div class="mb-3 form-group col-md-6">
+              <label>Barangay:</label>
+              <input class="form-control" name="delete_barangay" id="delete_barangay" placeholder="Enter barangay"
+                readonly>
+            </div>
+            <div class="mb-3 form-group col-md-6">
+              <label>Street:</label>
+              <input class="form-control" name="delete_street" id="delete_street" placeholder="Enter street" readonly>
+            </div>
+            <div class="mb-3 form-group col-md-6">
+              <label>Contact Number:</label>
+              <input class="form-control" name="delete_contact" id="delete_contact" placeholder="Enter contact number"
+                readonly>
+            </div>
+            <div class="mb-3 form-group col-md-6">
+              <label>Email:</label>
+              <input class="form-control" name="delete_email" id="delete_email" placeholder="Enter email" readonly>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-light-gray" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-pink">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <style>
   .cute-modal {
     background-color: #fff0f5;
@@ -184,6 +248,11 @@
   .btn-pink:hover {
     background-color: #ff4da6;
   }
+
+  .step-title {
+    color: #ff1493;
+    font-weight: bold;
+  }
 </style>
 
 
@@ -202,11 +271,16 @@
             <td>${r.first_name} ${r.last_name}</td>
             <td>${r.civil_status}</td>
             <td>${r.email}</td>
-            <td>
-              <button onclick='viewResident(${r.id})' class="btn btn-sm btn-success">View</button>
-              <a href="?page=update-resident&id=${r.id}" class="btn btn-sm btn-primary">Update</a>
-              <a href="api/delete_resident.php?id=${r.id}" class="btn btn-sm btn-danger"
-                 onclick="return confirm('Are you sure you want to delete this resident?');">Delete</a>
+            <td class="text-center">
+              <button onclick='viewResident(${r.id})' class="btn btn-sm btn-success me-1">
+                <i class="bi bi-eye"></i>
+              </button>
+              <a href="?page=update-resident&id=${r.id}" class="btn btn-sm btn-primary me-1" title="Update">
+                <i class="bi bi-pencil-square"></i>
+              </a>
+              <button onclick="deleteResident(${r.id})" class="btn btn-sm btn-danger">
+                <i class="bi bi-trash"></i>
+              </button>
             </td>
           `;
           tbody.appendChild(tr);
@@ -327,4 +401,36 @@
         alert("Error loading resident.");
       });
   }
+
+  function deleteResident(id) {
+    const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+    fetch(`api/resident_read_details.php?id=${id}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success === "1") {
+          const r = data.resident;
+
+          // Basic info
+          document.getElementById('delete_first_name').value = r.first_name;
+          document.getElementById('delete_middle_name').value = r.middle_name;
+          document.getElementById('delete_last_name').value = r.last_name;
+          document.getElementById('delete_suffix').value = r.suffix;
+
+          // Address & contact
+          document.getElementById('delete_barangay').value = r.barangay;
+          document.getElementById('delete_street').value = r.street;
+          document.getElementById('delete_contact').value = r.contact_number;
+          document.getElementById('delete_email').value = r.email;
+
+          modal.show();
+        } else {
+          alert("Resident not found.");
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Error loading resident.");
+      });
+  }
+
 </script>
