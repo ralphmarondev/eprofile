@@ -221,7 +221,41 @@
 
       <div class="modal-footer border-0">
         <button type="button" class="btn btn-light-gray" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-pink">Delete</button>
+        <button type="button" class="btn btn-pink" onclick="confirmDelete()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 cute-modal">
+      <div class="modal-header cute-modal-header">
+        <h5 class="modal-title">Yay! 🎉</h5>
+      </div>
+      <div class="modal-body">
+        You’re logged in successfully!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-pink" id="goToDashboard">Continue</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Error Modal -->
+<div class="modal fade" id="errorModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 cute-modal">
+      <div class="modal-header cute-modal-header">
+        <h5 class="modal-title">Oops! 😢</h5>
+      </div>
+      <div class="modal-body" id="errorMessage">
+        <!-- error message will be injected -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-pink" data-bs-dismiss="modal">Try Again</button>
       </div>
     </div>
   </div>
@@ -286,13 +320,13 @@
           tbody.appendChild(tr);
         });
       } else {
-        tbody.innerHTML = `<tr><td colspan="5" class="text-muted">No residents found.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" class="text-muted text-center">No residents found.</td></tr>`;
       }
     })
     .catch(err => {
       console.error(err);
       document.getElementById('residentTableBody').innerHTML =
-        `<tr><td colspan="5" class="text-danger">Error loading data.</td></tr>`;
+        `<tr><td colspan="5" class="text-danger text-center">Error loading data.</td></tr>`;
     });
 </script>
 
@@ -402,7 +436,12 @@
       });
   }
 
+  let deleteResidentId = null;
+  const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+  const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+
   function deleteResident(id) {
+    deleteResidentId = id;
     const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
     fetch(`api/resident_read_details.php?id=${id}`)
       .then(res => res.json())
@@ -433,4 +472,34 @@
       });
   }
 
+  function confirmDelete() {
+    if (!deleteResidentId) {
+      console.log('Resident id is emtpy.');
+      return;
+    }
+
+    fetch('api/resident_delete.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: deleteResidentId })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success === "1") {
+          document.querySelector('#successModal .modal-body').textContent = "Resident deleted successfully!";
+          successModal.show();
+          bootstrap.Modal.getInstance(document.getElementById('deleteModal')).hide();
+
+          document.getElementById('goToDashboard').onclick = () => location.reload();
+        } else {
+          document.getElementById('errorMessage').textContent = data.message || "Delete failed.";
+          errorModal.show();
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        document.getElementById('errorMessage').textContent = "Something went wrong while deleting.";
+        errorModal.show();
+      });
+  }
 </script>
