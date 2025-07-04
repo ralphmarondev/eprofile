@@ -1,4 +1,4 @@
-<h2>📑 Resident List</h2>
+<h2>Resident List</h2>
 <p>List of all registered residents will appear below.</p>
 
 <div class="table-responsive">
@@ -20,7 +20,7 @@
   </table>
 </div>
 
-<!-- 💖 View Resident Modal (Updated like Edit Modal) -->
+<!-- View Resident Modal -->
 <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true"
   data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
@@ -32,50 +32,58 @@
       <div class="modal-body">
         <div class="form-section form-section-basic">
           <h3>Basic Information</h3>
-          <div class="picture-container text-center">
-            <img class="selected-picture img-fluid rounded mb-3" id="viewPicture" src="#" alt="Profile Picture"
-              style="max-height: 200px;">
-            <div id="viewQrSection" style="display:none;">
-              <h6 class="text-muted">QR Code</h6>
-              <img id="viewQr" src="" alt="QR Code" style="max-width: 150px;">
-              <div class="mt-2">
+          <div class="row picture-container text-center align-items-start">
+            <div class="col-md-6 mb-3">
+              <img class="selected-picture img-fluid rounded" id="viewPicture" src="#" alt="Profile Picture"
+                style="height: 200px; width: 200px; object-fit: cover;">
+            </div>
+            <div class="col-md-6 mb-3" id="viewQrSection" style="display:none;">
+              <img id="viewQr" src="" alt="QR Code" class="img-fluid mb-2" style="height: 200px; width: 200px;">
+              <div>
                 <a id="qrDownload" href="#" download class="btn btn-outline-secondary btn-sm">⬇️ Download</a>
               </div>
             </div>
           </div>
+
           <hr>
           <div class="row">
-            <div class="form-group col-md-6">
-              <label>First Name:</label>
-              <input id="viewFirstName" class="form-control-plaintext fw-bold" readonly>
+            <div class="mb-3 col-md-6">
+              <label class="form-label">First Name</label>
+              <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Enter first name"
+                readonly>
             </div>
-            <div class="form-group col-md-6">
-              <label>Middle Name:</label>
-              <input id="viewMiddleName" class="form-control-plaintext fw-bold" readonly>
+            <div class="mb-3 col-md-6">
+              <label class="form-label">Middle Name</label>
+              <input type="text" class="form-control" name="middle_name" id="middle_name"
+                placeholder="Enter middel name" readonly>
             </div>
-            <div class="form-group col-md-6">
-              <label>Last Name:</label>
-              <input id="viewLastName" class="form-control-plaintext fw-bold" readonly>
+            <div class="mb-3 col-md-6">
+              <label class="form-label">Last Name</label>
+              <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Enter last name"
+                readonly>
             </div>
-            <div class="form-group col-md-6">
-              <label>Suffix:</label>
-              <input id="viewSuffix" class="form-control-plaintext fw-bold" readonly>
+            <div class="mb-3 col-md-6">
+              <label class="form-label">Suffix</label>
+              <input type="text" class="form-control" name="suffix" id="suffix" placeholder="Enter suffix" readonly>
             </div>
-            <div class="form-group col-md-6">
-              <label>Gender:</label>
-              <input id="viewGender" class="form-control-plaintext" readonly>
+            <div class="mb-3 col-md-6">
+              <label class="form-label">Birthday</label>
+              <input type="date" class="form-control" name="birthday" id="birthday" placeholder="Enter birthday"
+                readonly>
             </div>
-            <div class="form-group col-md-6">
-              <label>Birthday:</label>
-              <input id="viewBirthday" class="form-control-plaintext" readonly>
+            <div class="mb-3 col-md-6">
+              <label class="form-label">Birth Place</label>
+              <input type="text" class="form-control" name="b_place" id="b_place" placeholder="Enter birthplace"
+                readonly>
             </div>
-            <div class="form-group col-md-6">
-              <label>Birthplace:</label>
-              <input id="viewBPlace" class="form-control-plaintext" readonly>
+            <div class="mb-3 col-md-6">
+              <label class="form-label">Gender</label>
+              <input type="text" class="form-control" name="gender" id="gender" placeholder="Enter gender" readonly>
             </div>
-            <div class="form-group col-md-6">
-              <label>Civil Status:</label>
-              <input id="viewCivilStatus" class="form-control-plaintext" readonly>
+            <div class="mb-3 col-md-6">
+              <label class="form-label">Civil Status</label>
+              <input type="text" class="form-control" name="civil_status" id="civil_status"
+                placeholder="Enter civil status" readonly>
             </div>
           </div>
         </div>
@@ -83,41 +91,44 @@
         <div class="form-section form-section-other">
           <h3>Other Information</h3>
           <div class="row">
-            <div class="form-group col-md-6">
-              <label>Citizenship:</label>
-              <input id="viewCitizen" class="form-control-plaintext" readonly>
+            <div class="mb-3 col-md-6">
+              <label class="form-label">Citizenship</label>
+              <input type="text" class="form-control" name="citizen" id="citizen" placeholder="Enter citizen" readonly>
             </div>
-            <div class="form-group col-md-6">
-              <label>Religion:</label>
-              <input id="viewReligion" class="form-control-plaintext" readonly>
+            <div class="mb-3 col-md-6">
+              <label class="form-label">Religion</label>
+              <input type="text" class="form-control" name="religion" id="religion" placeholder="Enter religion"
+                readonly>
             </div>
-            <div class="form-group col-md-6">
-              <label>Height (cm):</label>
-              <input id="viewHeight" class="form-control-plaintext" readonly>
+            <div class="mb-3 col-md-6">
+              <label class="form-label">Height (cm)</label>
+              <input type="text" class="form-control" name="height" id="height" placeholder="Enter height" readonly>
             </div>
-            <div class="form-group col-md-6">
-              <label>Weight (kg):</label>
-              <input id="viewWeight" class="form-control-plaintext" readonly>
+            <div class="mb-3 col-md-6">
+              <label class="form-label">Weight (kg)</label>
+              <input type="text" class="form-control" name="weight" id="weight" placeholder="Enter weight" readonly>
             </div>
-            <div class="form-group col-md-6">
-              <label>Mother's Maiden Name:</label>
-              <input id="viewMother" class="form-control-plaintext" readonly>
+            <div class="mb-3 col-md-6">
+              <label class="form-label">Mother's Name</label>
+              <input type="text" class="form-control" name="mother_name" id="mother_name"
+                placeholder="Enter mother's name" readonly>
             </div>
-            <div class="form-group col-md-6">
-              <label>Father's Name:</label>
-              <input id="viewFather" class="form-control-plaintext" readonly>
+            <div class="mb-3 col-md-6">
+              <label class="form-label">Father's Name</label>
+              <input type="text" class="form-control" name="father_name" id="father_name"
+                placeholder="Enter father's name" readonly>
             </div>
-            <div class="form-group col-md-6">
+            <div class="mb-3 form-group col-md-6">
               <label>Voter:</label>
-              <input id="viewVoter" class="form-control-plaintext" readonly>
+              <input class="form-control" name="voter" id="voter" placeholder="Yes/No" readonly>
             </div>
-            <div class="form-group col-md-6">
+            <div class="mb-3 form-group col-md-6">
               <label>Beneficiary:</label>
-              <input id="viewBeneficiary" class="form-control-plaintext" readonly>
+              <input class="form-control" name="beneficiary" id="beneficiary" placeholder="Yes/No" readonly>
             </div>
-            <div class="form-group col-md-12">
+            <div class="mb-3 form-group col-md-12">
               <label>Beneficiary Categories:</label>
-              <div id="viewCategories" class="check"></div>
+              <div id="categories" class="check"></div>
             </div>
           </div>
         </div>
@@ -125,17 +136,21 @@
         <div class="form-section form-section-con">
           <h3>Address & Contact Information</h3>
           <div class="row">
-            <div class="form-group col-md-6">
-              <label>Address:</label>
-              <input id="viewAddress" class="form-control-plaintext" readonly>
+            <div class="mb-3 form-group col-md-6">
+              <label>Barangay:</label>
+              <input class="form-control" name="barangay" id="barangay" placeholder="Enter barangay" readonly>
             </div>
-            <div class="form-group col-md-6">
+            <div class="mb-3 form-group col-md-6">
+              <label>Street:</label>
+              <input class="form-control" name="street" id="street" placeholder="Enter street" readonly>
+            </div>
+            <div class="mb-3 form-group col-md-6">
               <label>Contact Number:</label>
-              <input id="viewContact" class="form-control-plaintext" readonly>
+              <input class="form-control" name="contact" id="contact" placeholder="Enter contact number" readonly>
             </div>
-            <div class="form-group col-md-6">
+            <div class="mb-3 form-group col-md-6">
               <label>Email:</label>
-              <input id="viewEmail" class="form-control-plaintext" readonly>
+              <input class="form-control" name="email" id="email" placeholder="Enter email" readonly>
             </div>
           </div>
         </div>
@@ -229,43 +244,78 @@
           }
 
           // Basic info
-          document.getElementById('viewFirstName').value = r.first_name;
-          document.getElementById('viewMiddleName').value = r.middle_name;
-          document.getElementById('viewLastName').value = r.last_name;
-          document.getElementById('viewSuffix').value = r.suffix;
-          document.getElementById('viewGender').value = r.gender;
-          document.getElementById('viewBirthday').value = r.birthday;
-          document.getElementById('viewBPlace').value = r.b_place;
-          document.getElementById('viewCivilStatus').value = r.civil_status;
-          document.getElementById('viewCitizen').value = r.citizen;
-          document.getElementById('viewReligion').value = r.religion;
-          document.getElementById('viewHeight').value = r.height;
-          document.getElementById('viewWeight').value = r.weight;
-          document.getElementById('viewMother').value = r.motherName;
-          document.getElementById('viewFather').value = r.fatherName;
-          document.getElementById('viewVoter').value = r.voter;
-          document.getElementById('viewBeneficiary').value = r.is_beneficiary;
+          document.getElementById('first_name').value = r.first_name;
+          document.getElementById('middle_name').value = r.middle_name;
+          document.getElementById('last_name').value = r.last_name;
+          document.getElementById('suffix').value = r.suffix;
+          document.getElementById('gender').value = r.gender;
+          document.getElementById('birthday').value = r.birthday;
+          document.getElementById('b_place').value = r.b_place;
+          document.getElementById('civil_status').value = r.civil_status;
+          document.getElementById('citizen').value = r.citizen;
+          document.getElementById('religion').value = r.religion;
+          document.getElementById('height').value = r.height;
+          document.getElementById('weight').value = r.weight;
+          document.getElementById('mother_name').value = r.motherName;
+          document.getElementById('father_name').value = r.fatherName;
+          document.getElementById('voter').value = r.voter;
+          document.getElementById('beneficiary').value = r.beneficiary;
 
           // Address & contact
-          document.getElementById('viewAddress').value = `${r.street}, ${r.barangay}`;
-          document.getElementById('viewContact').value = r.contact_number;
-          document.getElementById('viewEmail').value = r.email;
+          document.getElementById('barangay').value = r.barangay;
+          document.getElementById('street').value = r.street;
+          document.getElementById('contact').value = r.contact_number;
+          document.getElementById('email').value = r.email;
 
           // Categories
-          const categoriesDiv = document.getElementById('viewCategories');
-          categoriesDiv.innerHTML = '';
+          const categoriesDiv = document.getElementById('categories');
+          categoriesDiv.innerHTML = `
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input beneficiary-option" type="checkbox" value="PWD" id="catPWD" disabled>
+                  <label class="form-check-label" for="catPWD">PWD</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input beneficiary-option" type="checkbox" value="4Ps" id="cat4Ps" disabled>
+                  <label class="form-check-label" for="cat4Ps">4Ps</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input beneficiary-option" type="checkbox" value="Farmer" id="catFarmer" disabled>
+                  <label class="form-check-label" for="catFarmer">Farmer</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input beneficiary-option" type="checkbox" value="SingleParent" id="catSingle" disabled>
+                  <label class="form-check-label" for="catSingle">Single Parent</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input beneficiary-option" type="checkbox" value="OFW" id="catOFW" disabled>
+                  <label class="form-check-label" for="catOFW">OFW</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input beneficiary-option" type="checkbox" value="Indigent" id="catIndigent" disabled>
+                  <label class="form-check-label" for="catIndigent">Indigent</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input beneficiary-option" type="checkbox" value="SeniorCitizen" id="catSenior" disabled>
+                  <label class="form-check-label" for="catSenior">Senior Citizen</label>
+                </div>
+              </div>
+            </div>
+          `;
+
           if (r.categories) {
             const selected = r.categories.split(',').map(c => c.trim());
-            const all = ["PWD", "4Ps", "Farmer", "SingleParent", "OFW", "Indigent", "SeniorCitizen"];
-            all.forEach(cat => {
-              const checked = selected.includes(cat);
-              categoriesDiv.innerHTML += `
-                <label class="me-2">
-                  <input type="checkbox" disabled ${checked ? 'checked' : ''}> ${cat}
-                </label>
-              `;
+            selected.forEach(cat => {
+              const checkbox = categoriesDiv.querySelector(`input[value="${cat}"]`);
+              if (checkbox) checkbox.checked = true;
             });
           }
+
 
           modal.show();
         } else {
