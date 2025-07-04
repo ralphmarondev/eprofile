@@ -3,7 +3,7 @@ include 'connection.php';
 
 $response = ['success' => '0', 'residents' => []];
 
-$sql = "SELECT id, first_name, last_name, civil_status, email FROM residents WHERE is_deleted = 0 ORDER BY last_name";
+$sql = "SELECT id, first_name, last_name, barangay, email FROM residents WHERE is_deleted = 0 ORDER BY last_name";
 $result = $mysqli->query($sql);
 
 if ($result && $result->num_rows > 0) {

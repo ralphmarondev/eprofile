@@ -7,8 +7,8 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 $residentId = intval($_GET['id']);
 ?>
 
-<div class="container">
-	<div class="card shadow p-4 mb-4">
+<div class="card shadow p-4 mb-4">
+	<div class="container">
 		<h3 class="step-title mb-4">Update Resident</h3>
 
 		<form id="residentForm" enctype="multipart/form-data">
@@ -411,12 +411,12 @@ $residentId = intval($_GET['id']);
 						preview.style.display = 'block';
 					}
 				} else {
-					alert("❌ Failed to load resident data.");
+					alert("Failed to load resident data.");
 				}
 			})
 			.catch(err => {
 				console.error(err);
-				alert("⚠️ Error loading resident details.");
+				alert("Error loading resident details.");
 			});
 	});
 </script>

@@ -8,6 +8,7 @@ $page = $_GET['page'] ?? 'dashboard';
   <meta charset="UTF-8">
   <title>EProfile</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="assets/img/logo.png" type="image/x-icon">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -43,6 +44,11 @@ $page = $_GET['page'] ?? 'dashboard';
       font-size: 1rem;
       padding-left: 0.75rem !important;
     }
+
+    .step-title {
+      color: #ff1493;
+      font-weight: bold;
+    }
   </style>
 </head>
 
@@ -51,7 +57,12 @@ $page = $_GET['page'] ?? 'dashboard';
   <div class="d-flex">
     <!-- Sidebar -->
     <div class="sidebar bg-light p-3 border-end" id="sidebar">
-      <h4 class="mb-4">Dashboard</h4>
+      <div class="text-center">
+        <img src="assets/img/logo.png" alt="Logo" class="img-fluid rounded-circle mb-2"
+          style="height: 100px; width: 100px; object-fit: cover;">
+        <h5 class="step-title">Gonzaga, Cagayan</h5>
+      </div>
+      <hr class="mb-3">
       <ul class="nav flex-column">
         <li class="nav-item mb-2">
           <a class="nav-link <?= $page === 'dashboard' ? 'active' : '' ?>" href="?page=dashboard">Dashboard</a>

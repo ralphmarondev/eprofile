@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>📷 Scan QR Code</title>
+	<link rel="shortcut icon" href="assets/img/logo.png" type="image/x-icon">
   <script src="https://unpkg.com/html5-qrcode"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>

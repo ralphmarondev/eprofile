@@ -1,7 +1,6 @@
-<div class="container">
-	<div class="card shadow p-4 mb-4">
+<div class="card shadow p-4 mb-4">
+	<div class="container">
 		<h3 class="step-title mb-4">New Resident</h3>
-
 		<form id="residentForm" enctype="multipart/form-data">
 			<!-- Step 1: Basic Info -->
 			<div class="form-step active" id="step1">

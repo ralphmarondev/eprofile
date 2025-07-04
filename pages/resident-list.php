@@ -1,261 +1,304 @@
-<h3 class="step-title">Resident List</h3>
-<p>List of all registered residents will appear below.</p>
+<div class="card shadow p-4 mb-4" style="min-height: 500px;">
+  <div class="container">
 
-<div class="table-responsive">
-  <table class="table table-bordered table-hover align-middle">
-    <thead class="table-light">
-      <tr>
-        <th style="width: 5%;">#</th>
-        <th style="width: 32%;">Full Name</th>
-        <th style="width: 18%;">Civil Status</th>
-        <th style="width: 25%;">Email</th>
-        <th style="width: 20%;" class="text-center">Actions</th>
-      </tr>
-    </thead>
-    <tbody id="residentTableBody">
-      <tr>
-        <td colspan="5">Loading...</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+    <h3 class="step-title">Resident List</h3>
 
-<!-- View Resident Modal -->
-<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true"
-  data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
-    <div class="modal-content rounded-4 cute-modal">
-      <div class="modal-header cute-modal-header">
-        <h5 class="modal-title" id="viewModalLabel">View Resident</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- Filters -->
+    <div class="row mb-2">
+      <div class="col-md-6 mb-2">
+        <input type="text" class="form-control" id="searchInput" placeholder="Search by name...">
       </div>
-      <div class="modal-body">
-        <div class="form-section form-section-basic">
-          <h3>Basic Information</h3>
-          <div class="row picture-container text-center align-items-start">
-            <div class="col-md-6 mb-3">
-              <img class="selected-picture img-fluid rounded" id="viewPicture" src="#" alt="Profile Picture"
-                style="height: 200px; width: 200px; object-fit: cover;">
+      <div class="col-md-6 mb-2">
+        <select class="form-select" id="barangayFilter">
+          <option value="All">Filter by barangay (Default All)</option>
+          <option value="Amunitan">Amunitan</option>
+          <option value="Batangan">Batangan</option>
+          <option value="Baua">Baua</option>
+          <option value="Cabanbanan Norte">Cabanbanan Norte</option>
+          <option value="Cabanbanan Sur">Cabanbanan Sur</option>
+          <option value="Cabiraoan">Cabiraoan</option>
+          <option value="Calayan">Calayan</option>
+          <option value="Callao">Callao</option>
+          <option value="Caroan">Caroan</option>
+          <option value="Casitan">Casitan</option>
+          <option value="Flourishing(Poblacion)">Flourishing(Poblacion)</option>
+          <option value="Ipil">Ipil</option>
+          <option value="Isca">Isca</option>
+          <option value="Magrafil">Magrafil</option>
+          <option value="Minanga">Minanga</option>
+          <option value="Paradise(Poblacion)">Paradise(Poblacion)</option>
+          <option value="Pateng">Pateng</option>
+          <option value="Progressive(Poblacion)">Progressive(Poblacion)</option>
+          <option value="Rebecca(Nababacalan)">Rebecca(Nababacalan)</option>
+          <option value="San Jose">San Jose</option>
+          <option value="Santa Clara">Santa Clara</option>
+          <option value="Santa Cruz">Santa Cruz</option>
+          <option value="Santa Maria">Santa Maria</option>
+          <option value="Smart(Poblacion)">Smart(Poblacion)</option>
+          <option value="Tapel">Tapel</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th style="width: 5%;">#</th>
+            <th style="width: 29%;">Full Name</th>
+            <th style="width: 23%;">Barangay</th>
+            <th style="width: 23%;">Email</th>
+            <th style="width: 20%;" class="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="residentTableBody">
+          <tr>
+            <td colspan="5">Loading...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- View Resident Modal -->
+    <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel"
+      aria-hidden="true" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+        <div class="modal-content rounded-4 cute-modal">
+          <div class="modal-header cute-modal-header">
+            <h5 class="modal-title" id="viewModalLabel">View Resident</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-section form-section-basic">
+              <h3>Basic Information</h3>
+              <div class="row picture-container text-center align-items-start">
+                <div class="col-md-6 mb-3">
+                  <img class="selected-picture img-fluid rounded" id="viewPicture" src="#" alt="Profile Picture"
+                    style="height: 200px; width: 200px; object-fit: cover;">
+                </div>
+                <div class="col-md-6 mb-3" id="viewQrSection" style="display:none;">
+                  <img id="viewQr" src="" alt="QR Code" class="img-fluid mb-2" style="height: 200px; width: 200px;">
+                  <div>
+                    <a id="qrDownload" href="#" download class="btn btn-outline-secondary btn-sm">⬇️ Download</a>
+                  </div>
+                </div>
+              </div>
+
+              <hr>
+              <div class="row">
+                <div class="mb-3 col-md-6">
+                  <label class="form-label">First Name</label>
+                  <input type="text" class="form-control" name="first_name" id="first_name"
+                    placeholder="Enter first name" readonly>
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label class="form-label">Middle Name</label>
+                  <input type="text" class="form-control" name="middle_name" id="middle_name"
+                    placeholder="Enter middel name" readonly>
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label class="form-label">Last Name</label>
+                  <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Enter last name"
+                    readonly>
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label class="form-label">Suffix</label>
+                  <input type="text" class="form-control" name="suffix" id="suffix" placeholder="Enter suffix" readonly>
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label class="form-label">Birthday</label>
+                  <input type="date" class="form-control" name="birthday" id="birthday" placeholder="Enter birthday"
+                    readonly>
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label class="form-label">Birth Place</label>
+                  <input type="text" class="form-control" name="b_place" id="b_place" placeholder="Enter birthplace"
+                    readonly>
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label class="form-label">Gender</label>
+                  <input type="text" class="form-control" name="gender" id="gender" placeholder="Enter gender" readonly>
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label class="form-label">Civil Status</label>
+                  <input type="text" class="form-control" name="civil_status" id="civil_status"
+                    placeholder="Enter civil status" readonly>
+                </div>
+              </div>
             </div>
-            <div class="col-md-6 mb-3" id="viewQrSection" style="display:none;">
-              <img id="viewQr" src="" alt="QR Code" class="img-fluid mb-2" style="height: 200px; width: 200px;">
-              <div>
-                <a id="qrDownload" href="#" download class="btn btn-outline-secondary btn-sm">⬇️ Download</a>
+
+            <div class="form-section form-section-other">
+              <h3>Other Information</h3>
+              <div class="row">
+                <div class="mb-3 col-md-6">
+                  <label class="form-label">Citizenship</label>
+                  <input type="text" class="form-control" name="citizen" id="citizen" placeholder="Enter citizen"
+                    readonly>
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label class="form-label">Religion</label>
+                  <input type="text" class="form-control" name="religion" id="religion" placeholder="Enter religion"
+                    readonly>
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label class="form-label">Height (cm)</label>
+                  <input type="text" class="form-control" name="height" id="height" placeholder="Enter height" readonly>
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label class="form-label">Weight (kg)</label>
+                  <input type="text" class="form-control" name="weight" id="weight" placeholder="Enter weight" readonly>
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label class="form-label">Mother's Name</label>
+                  <input type="text" class="form-control" name="mother_name" id="mother_name"
+                    placeholder="Enter mother's name" readonly>
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label class="form-label">Father's Name</label>
+                  <input type="text" class="form-control" name="father_name" id="father_name"
+                    placeholder="Enter father's name" readonly>
+                </div>
+                <div class="mb-3 form-group col-md-6">
+                  <label>Voter:</label>
+                  <input class="form-control" name="voter" id="voter" placeholder="Yes/No" readonly>
+                </div>
+                <div class="mb-3 form-group col-md-6">
+                  <label>Beneficiary:</label>
+                  <input class="form-control" name="beneficiary" id="beneficiary" placeholder="Yes/No" readonly>
+                </div>
+                <div class="mb-3 form-group col-md-12">
+                  <label>Beneficiary Categories:</label>
+                  <div id="categories" class="check"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section form-section-con">
+              <h3>Address & Contact Information</h3>
+              <div class="row">
+                <div class="mb-3 form-group col-md-6">
+                  <label>Barangay:</label>
+                  <input class="form-control" name="barangay" id="barangay" placeholder="Enter barangay" readonly>
+                </div>
+                <div class="mb-3 form-group col-md-6">
+                  <label>Street:</label>
+                  <input class="form-control" name="street" id="street" placeholder="Enter street" readonly>
+                </div>
+                <div class="mb-3 form-group col-md-6">
+                  <label>Contact Number:</label>
+                  <input class="form-control" name="contact" id="contact" placeholder="Enter contact number" readonly>
+                </div>
+                <div class="mb-3 form-group col-md-6">
+                  <label>Email:</label>
+                  <input class="form-control" name="email" id="email" placeholder="Enter email" readonly>
+                </div>
               </div>
             </div>
           </div>
 
-          <hr>
-          <div class="row">
-            <div class="mb-3 col-md-6">
-              <label class="form-label">First Name</label>
-              <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Enter first name"
-                readonly>
-            </div>
-            <div class="mb-3 col-md-6">
-              <label class="form-label">Middle Name</label>
-              <input type="text" class="form-control" name="middle_name" id="middle_name"
-                placeholder="Enter middel name" readonly>
-            </div>
-            <div class="mb-3 col-md-6">
-              <label class="form-label">Last Name</label>
-              <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Enter last name"
-                readonly>
-            </div>
-            <div class="mb-3 col-md-6">
-              <label class="form-label">Suffix</label>
-              <input type="text" class="form-control" name="suffix" id="suffix" placeholder="Enter suffix" readonly>
-            </div>
-            <div class="mb-3 col-md-6">
-              <label class="form-label">Birthday</label>
-              <input type="date" class="form-control" name="birthday" id="birthday" placeholder="Enter birthday"
-                readonly>
-            </div>
-            <div class="mb-3 col-md-6">
-              <label class="form-label">Birth Place</label>
-              <input type="text" class="form-control" name="b_place" id="b_place" placeholder="Enter birthplace"
-                readonly>
-            </div>
-            <div class="mb-3 col-md-6">
-              <label class="form-label">Gender</label>
-              <input type="text" class="form-control" name="gender" id="gender" placeholder="Enter gender" readonly>
-            </div>
-            <div class="mb-3 col-md-6">
-              <label class="form-label">Civil Status</label>
-              <input type="text" class="form-control" name="civil_status" id="civil_status"
-                placeholder="Enter civil status" readonly>
-            </div>
+          <div class="modal-footer border-0">
+            <button type="button" class="btn btn-pink" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
-
-        <div class="form-section form-section-other">
-          <h3>Other Information</h3>
-          <div class="row">
-            <div class="mb-3 col-md-6">
-              <label class="form-label">Citizenship</label>
-              <input type="text" class="form-control" name="citizen" id="citizen" placeholder="Enter citizen" readonly>
-            </div>
-            <div class="mb-3 col-md-6">
-              <label class="form-label">Religion</label>
-              <input type="text" class="form-control" name="religion" id="religion" placeholder="Enter religion"
-                readonly>
-            </div>
-            <div class="mb-3 col-md-6">
-              <label class="form-label">Height (cm)</label>
-              <input type="text" class="form-control" name="height" id="height" placeholder="Enter height" readonly>
-            </div>
-            <div class="mb-3 col-md-6">
-              <label class="form-label">Weight (kg)</label>
-              <input type="text" class="form-control" name="weight" id="weight" placeholder="Enter weight" readonly>
-            </div>
-            <div class="mb-3 col-md-6">
-              <label class="form-label">Mother's Name</label>
-              <input type="text" class="form-control" name="mother_name" id="mother_name"
-                placeholder="Enter mother's name" readonly>
-            </div>
-            <div class="mb-3 col-md-6">
-              <label class="form-label">Father's Name</label>
-              <input type="text" class="form-control" name="father_name" id="father_name"
-                placeholder="Enter father's name" readonly>
-            </div>
-            <div class="mb-3 form-group col-md-6">
-              <label>Voter:</label>
-              <input class="form-control" name="voter" id="voter" placeholder="Yes/No" readonly>
-            </div>
-            <div class="mb-3 form-group col-md-6">
-              <label>Beneficiary:</label>
-              <input class="form-control" name="beneficiary" id="beneficiary" placeholder="Yes/No" readonly>
-            </div>
-            <div class="mb-3 form-group col-md-12">
-              <label>Beneficiary Categories:</label>
-              <div id="categories" class="check"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-section form-section-con">
-          <h3>Address & Contact Information</h3>
-          <div class="row">
-            <div class="mb-3 form-group col-md-6">
-              <label>Barangay:</label>
-              <input class="form-control" name="barangay" id="barangay" placeholder="Enter barangay" readonly>
-            </div>
-            <div class="mb-3 form-group col-md-6">
-              <label>Street:</label>
-              <input class="form-control" name="street" id="street" placeholder="Enter street" readonly>
-            </div>
-            <div class="mb-3 form-group col-md-6">
-              <label>Contact Number:</label>
-              <input class="form-control" name="contact" id="contact" placeholder="Enter contact number" readonly>
-            </div>
-            <div class="mb-3 form-group col-md-6">
-              <label>Email:</label>
-              <input class="form-control" name="email" id="email" placeholder="Enter email" readonly>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal-footer border-0">
-        <button type="button" class="btn btn-pink" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- Delete Resident Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-  aria-hidden="true" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
-    <div class="modal-content rounded-4 cute-modal">
-      <div class="modal-header cute-modal-header">
-        <h5 class="modal-title" id="viewModalLabel">Delete Resident</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="form-section form-section-basic">
-          <h5 class="text-muted">Are you sure you want to delete this resident? This action cannot be undone.</h5>
-          <hr>
-          <div class="row">
-            <div class="mb-3 col-md-6">
-              <label class="form-label">First Name</label>
-              <input type="text" class="form-control" name="delete_first_name" id="delete_first_name"
-                placeholder="Enter first name" readonly>
+    <!-- Delete Resident Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+      aria-hidden="true" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+        <div class="modal-content rounded-4 cute-modal">
+          <div class="modal-header cute-modal-header">
+            <h5 class="modal-title" id="viewModalLabel">Delete Resident</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-section form-section-basic">
+              <h5 class="text-muted">Are you sure you want to delete this resident? This action cannot be undone.</h5>
+              <hr>
+              <div class="row">
+                <div class="mb-3 col-md-6">
+                  <label class="form-label">First Name</label>
+                  <input type="text" class="form-control" name="delete_first_name" id="delete_first_name"
+                    placeholder="Enter first name" readonly>
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label class="form-label">Middle Name</label>
+                  <input type="text" class="form-control" name="delete_middle_name" id="delete_middle_name"
+                    placeholder="Enter middle name" readonly>
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label class="form-label">Last Name</label>
+                  <input type="text" class="form-control" name="delete_last_name" id="delete_last_name"
+                    placeholder="Enter last name" readonly>
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label class="form-label">Suffix</label>
+                  <input type="text" class="form-control" name="delete_suffix" id="delete_suffix"
+                    placeholder="Enter suffix" readonly>
+                </div>
+                <div class="mb-3 form-group col-md-6">
+                  <label>Barangay:</label>
+                  <input class="form-control" name="delete_barangay" id="delete_barangay" placeholder="Enter barangay"
+                    readonly>
+                </div>
+                <div class="mb-3 form-group col-md-6">
+                  <label>Street:</label>
+                  <input class="form-control" name="delete_street" id="delete_street" placeholder="Enter street"
+                    readonly>
+                </div>
+                <div class="mb-3 form-group col-md-6">
+                  <label>Contact Number:</label>
+                  <input class="form-control" name="delete_contact" id="delete_contact"
+                    placeholder="Enter contact number" readonly>
+                </div>
+                <div class="mb-3 form-group col-md-6">
+                  <label>Email:</label>
+                  <input class="form-control" name="delete_email" id="delete_email" placeholder="Enter email" readonly>
+                </div>
+              </div>
             </div>
-            <div class="mb-3 col-md-6">
-              <label class="form-label">Middle Name</label>
-              <input type="text" class="form-control" name="delete_middle_name" id="delete_middle_name"
-                placeholder="Enter middle name" readonly>
-            </div>
-            <div class="mb-3 col-md-6">
-              <label class="form-label">Last Name</label>
-              <input type="text" class="form-control" name="delete_last_name" id="delete_last_name"
-                placeholder="Enter last name" readonly>
-            </div>
-            <div class="mb-3 col-md-6">
-              <label class="form-label">Suffix</label>
-              <input type="text" class="form-control" name="delete_suffix" id="delete_suffix" placeholder="Enter suffix"
-                readonly>
-            </div>
-            <div class="mb-3 form-group col-md-6">
-              <label>Barangay:</label>
-              <input class="form-control" name="delete_barangay" id="delete_barangay" placeholder="Enter barangay"
-                readonly>
-            </div>
-            <div class="mb-3 form-group col-md-6">
-              <label>Street:</label>
-              <input class="form-control" name="delete_street" id="delete_street" placeholder="Enter street" readonly>
-            </div>
-            <div class="mb-3 form-group col-md-6">
-              <label>Contact Number:</label>
-              <input class="form-control" name="delete_contact" id="delete_contact" placeholder="Enter contact number"
-                readonly>
-            </div>
-            <div class="mb-3 form-group col-md-6">
-              <label>Email:</label>
-              <input class="form-control" name="delete_email" id="delete_email" placeholder="Enter email" readonly>
-            </div>
+          </div>
+
+          <div class="modal-footer border-0">
+            <button type="button" class="btn btn-light-gray" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-pink" onclick="confirmDelete()">Delete</button>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="modal-footer border-0">
-        <button type="button" class="btn btn-light-gray" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-pink" onclick="confirmDelete()">Delete</button>
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 cute-modal">
+          <div class="modal-header cute-modal-header">
+            <h5 class="modal-title">Yay! 🎉</h5>
+          </div>
+          <div class="modal-body">
+            You're logged in successfully!
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-pink" id="goToDashboard">Continue</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- Success Modal -->
-<div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content rounded-4 cute-modal">
-      <div class="modal-header cute-modal-header">
-        <h5 class="modal-title">Yay! 🎉</h5>
-      </div>
-      <div class="modal-body">
-        You’re logged in successfully!
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-pink" id="goToDashboard">Continue</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Error Modal -->
-<div class="modal fade" id="errorModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content rounded-4 cute-modal">
-      <div class="modal-header cute-modal-header">
-        <h5 class="modal-title">Oops! 😢</h5>
-      </div>
-      <div class="modal-body" id="errorMessage">
-        <!-- error message will be injected -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-pink" data-bs-dismiss="modal">Try Again</button>
+    <!-- Error Modal -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 cute-modal">
+          <div class="modal-header cute-modal-header">
+            <h5 class="modal-title">Oops! 😢</h5>
+          </div>
+          <div class="modal-body" id="errorMessage">
+            <!-- error message will be injected -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-pink" data-bs-dismiss="modal">Try Again</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -302,8 +345,8 @@
           tr.innerHTML = `
             <td>${i + 1}</td>
             <td>${r.first_name} ${r.last_name}</td>
-            <td>${r.civil_status}</td>
             <td>${r.email}</td>
+            <td>${r.barangay}</td>
             <td class="text-center">
               <button onclick='viewResident(${r.id})' class="btn btn-sm btn-success me-1">
                 <i class="bi bi-eye"></i>
