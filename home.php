@@ -49,6 +49,35 @@ $page = $_GET['page'] ?? 'dashboard';
       color: #ff1493;
       font-weight: bold;
     }
+
+    .nav-link,
+    .accordion-button {
+      color: #ff69b4 !important;
+    }
+
+    .nav-link.active,
+    .accordion-button:not(.collapsed) {
+      color: #ff1493 !important;
+      font-weight: bold;
+    }
+
+    .nav-link:hover,
+    .accordion-button:hover {
+      color: #ff4da6 !important;
+    }
+
+    .dropdown-menu .dropdown-item:hover {
+      background-color: #ffe4f0;
+      color: #ff1493;
+    }
+
+    .text-pink {
+      color: #ff69b4 !important;
+    }
+
+    .text-pink:hover {
+      color: #ff4da6 !important;
+    }
   </style>
 </head>
 
