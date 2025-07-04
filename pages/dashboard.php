@@ -37,7 +37,7 @@
 			<div class="card-body d-flex flex-column align-items-center justify-content-center">
 				<i class="bi bi-house-door-fill stat-icon"></i>
 				<div class="stat-title">Barangays</div>
-				<div class="stat-value" id="totalBarangays">0</div>
+				<div class="stat-value" id="totalBarangays">25</div>
 			</div>
 		</div>
 	</div>
