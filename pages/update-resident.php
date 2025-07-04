@@ -383,4 +383,62 @@ $residentId = intval($_GET['id']);
 			picturePreview.style.display = 'block';
 		}
 	});
+
+	document.addEventListener("DOMContentLoaded", () => {
+		const id = <?= json_encode($residentId) ?>;
+
+		fetch(`api/resident_read_details.php?id=${id}`)
+			.then(res => res.json())
+			.then(data => {
+				if (data.success === "1") {
+					const r = data.resident;
+
+					document.getElementById('first_name').value = r.first_name;
+					document.getElementById('middle_name').value = r.middle_name;
+					document.getElementById('last_name').value = r.last_name;
+					document.getElementById('suffix').value = r.suffix;
+					document.getElementById('birthday').value = r.birthday;
+					document.getElementById('b_place').value = r.b_place;
+					document.getElementById('gender').value = r.gender;
+					document.getElementById('civil_status').value = r.civil_status;
+					document.getElementById('citizen').value = r.citizen;
+					document.getElementById('religion').value = r.religion;
+					document.getElementById('height').value = r.height;
+					document.getElementById('weight').value = r.weight;
+					document.getElementById('mother_name').value = r.motherName;
+					document.getElementById('father_name').value = r.fatherName;
+					document.getElementById('voter').value = r.voter;
+					document.getElementById('isBeneficiary').value = r.beneficiary;
+
+					// If 'Yes', show categories and populate
+					if (r.beneficiary === "Yes") {
+						document.getElementById("beneficiaryOptions").style.display = "block";
+						const selected = (r.categories || "").split(',').map(c => c.trim());
+						selected.forEach(cat => {
+							const checkbox = document.querySelector(`.beneficiary-option[value="${cat}"]`);
+							if (checkbox) checkbox.checked = true;
+						});
+						document.getElementById("beneficiaryHidden").value = selected.join(", ");
+					}
+
+					document.querySelector('[name="barangay"]').value = r.barangay;
+					document.getElementById('street').value = r.street;
+					document.getElementById('email').value = r.email;
+					document.getElementById('contact_number').value = r.contact_number;
+
+					// Preview picture
+					if (r.picture) {
+						const preview = document.getElementById('picturePreview');
+						preview.src = r.picture;
+						preview.style.display = 'block';
+					}
+				} else {
+					alert("❌ Failed to load resident data.");
+				}
+			})
+			.catch(err => {
+				console.error(err);
+				alert("⚠️ Error loading resident details.");
+			});
+	});
 </script>
