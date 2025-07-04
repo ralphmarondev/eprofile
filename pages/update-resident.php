@@ -232,7 +232,7 @@ $residentId = intval($_GET['id']);
 					</div>
 					<div class="mb-3 col-md-12">
 						<label class="form-label">Profile Picture</label>
-						<input type="file" class="form-control" name="picture" id="pictureInput" accept="image/*" required>
+						<input type="file" class="form-control" name="picture" id="pictureInput" accept="image/*">
 						<div class="mt-3 text-center">
 							<img id="picturePreview" src="" alt="Preview"
 								style="max-width: 150px; max-height: 150px; display: none; border-radius: 8px; border: 1px solid #ccc;" />
@@ -315,45 +315,23 @@ $residentId = intval($_GET['id']);
 		e.preventDefault();
 
 		const formData = new FormData(this);
+		const id = <?= json_encode($residentId) ?>;
 
-		fetch('api/resident_create.php', {
+		fetch(`api/resident_update.php?id=${id}`, {
 			method: 'POST',
 			body: formData
 		})
 			.then(res => res.json())
 			.then(data => {
 				if (data.success === "1") {
-					const residentId = data.id;
-					const canvas = document.createElement("canvas");
-
-					QRCode.toCanvas(canvas, String(residentId), async function (err) {
-						const imageData = canvas.toDataURL("image/png");
-
-						const response = await fetch('api/save_qrcode.php', {
-							method: "POST",
-							headers: { "Content-Type": "application/json" },
-							body: JSON.stringify({ image: imageData, value: residentId })
-						});
-
-						const qrData = await response.json();
-						if (qrData.success) {
-							// 🪄 Show modal with QR code
-							document.getElementById('qrImage').src = imageData;
-							new bootstrap.Modal(document.getElementById('qrModal')).show();
-						} else {
-							alert("QR saving failed.");
-						}
-					});
-
-					this.reset();
-					currentStep = 1;
-					showStep(currentStep);
+					alert("Resident updated successfully!");
+					window.location.href = "?page=resident-list";
 				} else {
-					alert("❌ Failed: " + data.error);
+					alert("Failed: " + data.error);
 				}
 			})
 			.catch(err => {
-				alert("⚠️ Server error: " + err);
+				alert("Server error: " + err);
 			});
 	});
 
