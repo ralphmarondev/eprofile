@@ -9,7 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   if ($id > 0) {
     // Prepare and execute delete query
-    $stmt = $mysqli->prepare("DELETE FROM residents WHERE id = ?");
+    // $stmt = $mysqli->prepare("DELETE FROM residents WHERE id = ?");
+    $stmt = $mysqli->prepare("UPDATE residents SET is_deleted = 1 WHERE id = ?");
     $stmt->bind_param("i", $id);
 
     if ($stmt->execute()) {

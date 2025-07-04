@@ -289,7 +289,6 @@
   }
 </style>
 
-
 <script>
   fetch('api/resident_read_list.php')
     .then(res => res.json())
@@ -328,9 +327,7 @@
       document.getElementById('residentTableBody').innerHTML =
         `<tr><td colspan="5" class="text-danger text-center">Error loading data.</td></tr>`;
     });
-</script>
 
-<script>
   function viewResident(id) {
     const modal = new bootstrap.Modal(document.getElementById('viewModal'));
     fetch(`api/resident_read_details.php?id=${id}`)

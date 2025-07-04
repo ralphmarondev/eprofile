@@ -10,7 +10,7 @@ if (!isset($_GET['id'])) {
 
 $id = intval($_GET['id']);
 
-$sql = "SELECT * FROM residents WHERE id = ?";
+$sql = "SELECT * FROM residents WHERE id = ? AND is_deleted = 0";
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("i", $id);
 $stmt->execute();
