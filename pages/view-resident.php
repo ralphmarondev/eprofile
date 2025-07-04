@@ -28,8 +28,18 @@ $id = htmlspecialchars($_GET['id'], ENT_QUOTES);
 						<div class="row g-0">
 							<div class="col-md-4 text-center p-3">
 								<img src="${r.picture || 'assets/default-profile.png'}" 
-										 class="img-fluid rounded" 
-										 alt="Profile Picture" style="max-height: 250px; object-fit: cover;">
+										class="img-fluid rounded mb-3" 
+										alt="Profile Picture" style="max-height: 250px; object-fit: cover;">
+
+								${r.qr_path ? `
+									<div>
+										<h6 class="text-muted">QR Code</h6>
+										<img src="${r.qr_path}" alt="QR Code" style="max-width: 150px;" />
+										<div class="mt-2">
+											<a href="${r.qr_path}" download class="btn btn-outline-secondary btn-sm">⬇️ Download</a>
+										</div>
+									</div>
+								` : '<p class="text-muted mt-3">QR code not available.</p>'}
 							</div>
 							<div class="col-md-8">
 								<div class="card-body">
