@@ -123,7 +123,7 @@ $page = $_GET['page'] ?? 'dashboard';
         }
 
         // Define safe/allowed pages
-        $allowedPages = ['dashboard', 'resident-list', 'new-resident', 'beneficiaries'];
+        $allowedPages = ['dashboard', 'resident-list', 'new-resident', 'beneficiaries', 'view-resident'];
 
         // Default to 404 if not allowed
         $pageFile = in_array($page, $allowedPages)
