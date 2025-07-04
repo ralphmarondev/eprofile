@@ -1,38 +1,41 @@
 <div class="container">
 	<div class="card shadow p-4 mb-4">
-		<h3 class="step-title mb-4">➕ New Resident</h3>
+		<h3 class="step-title mb-4">New Resident</h3>
 
 		<form id="residentForm" enctype="multipart/form-data">
 			<!-- Step 1: Basic Info -->
 			<div class="form-step active" id="step1">
+				<h5 class="text-muted">Basic Information</h5>
 				<div class="row">
 					<div class="mb-3 col-md-6">
 						<label class="form-label">First Name</label>
-						<input type="text" class="form-control" name="first_name" required>
+						<input type="text" class="form-control" name="first_name" id="first_name" placeholder="Enter first name"
+							required>
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Middle Name</label>
-						<input type="text" class="form-control" name="middle_name">
+						<input type="text" class="form-control" name="middle_name" id="middle_name" placeholder="Enter middle name">
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Last Name</label>
-						<input type="text" class="form-control" name="last_name" required>
+						<input type="text" class="form-control" name="last_name" id="last_name" placeholder="Enter last name"
+							required>
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Suffix</label>
-						<input type="text" class="form-control" name="suffix">
+						<input type="text" class="form-control" name="suffix" id="suffix" placeholder="Enter suffix">
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Birthday</label>
-						<input type="date" class="form-control" name="birthday">
+						<input type="date" class="form-control" name="birthday" id="birthday" placeholder="Enter birthday" required>
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Birth Place</label>
-						<input type="text" class="form-control" name="b_place">
+						<input type="text" class="form-control" name="b_place" id="b_place" placeholder="Enter birthplace" required>
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Gender</label>
-						<select class="form-select" name="gender" required>
+						<select class="form-select" name="gender" id="gender" required>
 							<option value="">Choose...</option>
 							<option>Male</option>
 							<option>Female</option>
@@ -40,7 +43,7 @@
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Civil Status</label>
-						<select class="form-select" name="civil_status">
+						<select class="form-select" name="civil_status" id="civil_status">
 							<option value="">Choose...</option>
 							<option>Single</option>
 							<option>Married</option>
@@ -56,30 +59,34 @@
 
 			<!-- Step 2: Other Information -->
 			<div class="form-step" id="step2">
+				<h5 class="text-muted">Other Information</h5>
 				<div class="row">
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Citizenship</label>
-						<input type="text" class="form-control" name="citizen">
+						<input type="text" class="form-control" name="citizen" id="citizen" placeholder="Enter citizenship"
+							required>
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Religion</label>
-						<input type="text" class="form-control" name="religion">
+						<input type="text" class="form-control" name="religion" id="religion" placeholder="Enter religion" required>
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Height (cm)</label>
-						<input type="text" class="form-control" name="height">
+						<input type="text" class="form-control" name="height" id="height" placeholder="Enter height" required>
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Weight (kg)</label>
-						<input type="text" class="form-control" name="weight">
+						<input type="text" class="form-control" name="weight" id="weight" placeholder="Enter weight" required>
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Mother's Name</label>
-						<input type="text" class="form-control" name="motherName">
+						<input type="text" class="form-control" name="mother_name" id="mother_name" placeholder="Enter mother name"
+							required>
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Father's Name</label>
-						<input type="text" class="form-control" name="fatherName">
+						<input type="text" class="form-control" name="father_name" id="father_name" placeholder="Enter father name"
+							required>
 					</div>
 				</div>
 				<div class="d-flex justify-content-between">
@@ -90,11 +97,12 @@
 
 			<!-- Step 3: Voter & Beneficiary Info -->
 			<div class="form-step" id="step3">
+				<h5 class="text-muted">Voter and Beneficiary Information</h5>
 				<div class="row">
 					<!-- Voter -->
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Are you a Voter?</label>
-						<select class="form-select" name="voter" required>
+						<select class="form-select" name="voter" id="voter" required>
 							<option value="">Choose...</option>
 							<option value="Yes">Yes</option>
 							<option value="No">No</option>
@@ -167,10 +175,11 @@
 
 			<!-- Step 4: Address and Contact Information -->
 			<div class="form-step" id="step3">
+				<h5 class="text-muted">Address and Contact Information</h5>
 				<div class="row">
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Barangay</label>
-						<select class="form-select" name="barangay">
+						<select class="form-select" name="barangay" required>
 							<option value="">Choose...</option>
 							<option value="Amunitan">Amunitan</option>
 							<option value="Batangan">Batangan</option>
@@ -201,15 +210,16 @@
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Street</label>
-						<input type="text" class="form-control" name="street">
+						<input type="text" class="form-control" name="street" id="street" placeholder="Enter street" required>
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Email</label>
-						<input type="email" class="form-control" name="email">
+						<input type="email" class="form-control" name="email" id="email" placeholder="Enter email" required>
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Contact Number</label>
-						<input type="text" class="form-control" name="contact_number">
+						<input type="text" class="form-control" name="contact_number" id="contact_number"
+							placeholder="Enter contact number" required>
 					</div>
 					<div class="mb-3 col-md-12">
 						<label class="form-label">Profile Picture</label>
