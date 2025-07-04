@@ -543,3 +543,66 @@
       });
   }
 </script>
+
+<script>
+  const searchInput = document.getElementById('searchInput');
+  const barangayFilter = document.getElementById('barangayFilter');
+
+  searchInput.addEventListener('input', fetchFilteredResidents);
+  barangayFilter.addEventListener('change', fetchFilteredResidents);
+
+  function fetchFilteredResidents() {
+    const searchTerm = searchInput.value.trim();
+    const barangay = barangayFilter.value;
+
+    const body = {
+      name: searchTerm,
+      barangay: barangay === 'All' ? '' : barangay
+    };
+
+    fetch('api/resident_search.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    })
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.getElementById('residentTableBody');
+        tbody.innerHTML = '';
+
+        if (data.success === "1") {
+          data.residents.forEach((r, i) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>${i + 1}</td>
+              <td>${r.first_name} ${r.last_name}</td>
+              <td>${r.email}</td>
+              <td>${r.barangay}</td>
+              <td class="text-center">
+                <button onclick='viewResident(${r.id})' class="btn btn-sm btn-success me-1">
+                  <i class="bi bi-eye"></i>
+                </button>
+                <a href="home.php?page=update-resident&id=${r.id}" class="btn btn-sm btn-primary me-1" title="Update">
+                  <i class="bi bi-pencil-square"></i>
+                </a>
+                <button onclick="deleteResident(${r.id})" class="btn btn-sm btn-danger">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
+        } else {
+          tbody.innerHTML = `<tr><td colspan="5" class="text-muted text-center">No residents found.</td></tr>`;
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        document.getElementById('residentTableBody').innerHTML =
+          `<tr><td colspan="5" class="text-danger text-center">Error loading data.</td></tr>`;
+      });
+  }
+
+  // Call once initially to load all residents
+  fetchFilteredResidents();
+</script>

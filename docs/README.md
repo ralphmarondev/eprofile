@@ -69,7 +69,9 @@ CREATE TABLE residents (
     street VARCHAR(255),
     contact_number VARCHAR(20),
     email VARCHAR(100),
-    picture VARCHAR(255)
+    picture VARCHAR(255),
+    qr_path VARCHAR(255),
+    is_deleted BOOLEAN DEFAULT 0
 );
 ```
 
