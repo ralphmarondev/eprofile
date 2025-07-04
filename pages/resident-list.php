@@ -2,7 +2,7 @@
 <p>List of all registered residents will appear below.</p>
 
 <div class="table-responsive">
-  <table class="table table-bordered table-hover align-middle text-center">
+  <table class="table table-bordered table-hover align-middle">
     <thead class="table-light">
       <tr>
         <th>#</th>

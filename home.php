@@ -18,6 +18,8 @@ $page = $_GET['page'] ?? 'dashboard';
 
     .sidebar {
       height: 100vh;
+      width: 250px;
+      flex-shrink: 0;
     }
 
     @media (max-width: 768px) {
@@ -55,12 +57,12 @@ $page = $_GET['page'] ?? 'dashboard';
         </li>
 
         <!-- Residents Dropdown -->
-        <li class="nav-item mb-2">
+        <li class="nav-item mb-2 ms-1">
           <div class="accordion" id="accordionResidents">
             <div class="accordion-item border-0">
               <h2 class="accordion-header" id="headingResidents">
-                <button class="accordion-button collapsed bg-light p-2 text-start" type="button"
-                  data-bs-toggle="collapse" data-bs-target="#collapseResidents" style="box-shadow: none;">
+                <button class="accordion-button collapsed bg-light text-start" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapseResidents" style="box-shadow: none;">
                   Residents
                 </button>
               </h2>
