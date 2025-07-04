@@ -46,8 +46,8 @@
           <tr>
             <th style="width: 5%;">#</th>
             <th style="width: 29%;">Full Name</th>
-            <th style="width: 23%;">Barangay</th>
             <th style="width: 23%;">Email</th>
+            <th style="width: 23%;">Barangay</th>
             <th style="width: 20%;" class="text-center">Actions</th>
           </tr>
         </thead>
