@@ -69,3 +69,20 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	fetch('api/dashboard_stats.php')
+		.then(res => res.json())
+		.then(data => {
+			if (data.success === "1") {
+				document.getElementById('totalPopulation').textContent = data.total_population;
+				document.getElementById('totalVoters').textContent = data.total_voters;
+				document.getElementById('totalBeneficiaries').textContent = data.total_beneficiaries;
+			} else {
+				console.error("Failed to fetch stats:", data.message);
+			}
+		})
+		.catch(err => {
+			console.error("Error fetching dashboard stats:", err);
+		});
+</script>
