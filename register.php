@@ -102,7 +102,7 @@
 			e.preventDefault();
 			const formData = new FormData(form);
 
-			fetch('api/register.php', {
+			fetch('api/user_register.php', {
 				method: 'POST',
 				body: formData
 			})

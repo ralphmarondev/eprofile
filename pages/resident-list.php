@@ -21,7 +21,7 @@
 </div>
 
 <script>
-  fetch('api/read_resident_list.php')
+  fetch('api/resident_read_list.php')
     .then(res => res.json())
     .then(data => {
       const tbody = document.getElementById('residentTableBody');

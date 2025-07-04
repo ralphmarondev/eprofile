@@ -101,7 +101,7 @@
 			e.preventDefault();
 			const formData = new FormData(form);
 
-			fetch('api/login.php', {
+			fetch('api/user_login.php', {
 				method: 'POST',
 				body: formData
 			})
