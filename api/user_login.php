@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $sql = $mysqli->prepare("SELECT id, email, password, role FROM users WHERE email = ? AND is_deleted = 0");
+    $sql = $mysqli->prepare("SELECT id, email, password, role FROM users WHERE email = ?");
     $sql->bind_param("s", $email);
     $sql->execute();
     $result = $sql->get_result();

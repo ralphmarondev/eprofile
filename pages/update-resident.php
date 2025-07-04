@@ -1,6 +1,15 @@
+<?php
+if (!isset($_GET['id']) || empty($_GET['id'])) {
+	echo "<div class='alert alert-danger'>Resident ID is missing.</div>";
+	return;
+}
+
+$residentId = intval($_GET['id']);
+?>
+
 <div class="container">
 	<div class="card shadow p-4 mb-4">
-		<h3 class="step-title mb-4">New Resident</h3>
+		<h3 class="step-title mb-4">Update Resident</h3>
 
 		<form id="residentForm" enctype="multipart/form-data">
 			<!-- Step 1: Basic Info -->
@@ -232,7 +241,7 @@
 				</div>
 				<div class="d-flex justify-content-between">
 					<button type="button" class="btn btn-secondary" onclick="prevStep()">⬅️ Back</button>
-					<button type="submit" class="btn btn-success">✅ Save New Resident</button>
+					<button type="submit" class="btn btn-success">✅ Update Resident</button>
 				</div>
 			</div>
 		</form>

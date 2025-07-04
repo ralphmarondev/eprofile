@@ -308,7 +308,7 @@
               <button onclick='viewResident(${r.id})' class="btn btn-sm btn-success me-1">
                 <i class="bi bi-eye"></i>
               </button>
-              <a href="?page=update-resident&id=${r.id}" class="btn btn-sm btn-primary me-1" title="Update">
+              <a href="home.php?page=update-resident&id=${r.id}" class="btn btn-sm btn-primary me-1" title="Update">
                 <i class="bi bi-pencil-square"></i>
               </a>
               <button onclick="deleteResident(${r.id})" class="btn btn-sm btn-danger">
