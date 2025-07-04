@@ -51,7 +51,7 @@ $page = $_GET['page'] ?? 'dashboard';
       <h4 class="mb-4">Dashboard</h4>
       <ul class="nav flex-column">
         <li class="nav-item mb-2">
-          <a class="nav-link <?= $page === 'dashboard' ? 'active' : '' ?>" href="?page=dashboard">📋 Dashboard</a>
+          <a class="nav-link <?= $page === 'dashboard' ? 'active' : '' ?>" href="?page=dashboard">Dashboard</a>
         </li>
 
         <!-- Residents Dropdown -->
@@ -61,7 +61,7 @@ $page = $_GET['page'] ?? 'dashboard';
               <h2 class="accordion-header" id="headingResidents">
                 <button class="accordion-button collapsed bg-light p-2 text-start" type="button"
                   data-bs-toggle="collapse" data-bs-target="#collapseResidents" style="box-shadow: none;">
-                  🏘️ Residents
+                  Residents
                 </button>
               </h2>
               <div id="collapseResidents"
@@ -69,9 +69,9 @@ $page = $_GET['page'] ?? 'dashboard';
                 <div class="accordion-body py-1 px-2">
                   <ul class="nav flex-column">
                     <li><a class="nav-link small <?= $page === 'resident-list' ? 'active' : '' ?>"
-                        href="?page=resident-list">📑 Resident List</a></li>
+                        href="?page=resident-list">Resident List</a></li>
                     <li><a class="nav-link small <?= $page === 'new-resident' ? 'active' : '' ?>"
-                        href="?page=new-resident">➕ New Resident</a></li>
+                        href="?page=new-resident">New Resident</a></li>
                   </ul>
                 </div>
               </div>
@@ -81,8 +81,8 @@ $page = $_GET['page'] ?? 'dashboard';
 
         <!-- Beneficiaries -->
         <li class="nav-item mb-2">
-          <a class="nav-link <?= $page === 'beneficiaries' ? 'active' : '' ?>" href="?page=beneficiaries">🤝
-            Beneficiaries</a>
+          <a class="nav-link <?= $page === 'beneficiaries' ? 'active' : '' ?>"
+            href="?page=beneficiaries">Beneficiaries</a>
         </li>
       </ul>
     </div>
@@ -108,7 +108,7 @@ $page = $_GET['page'] ?? 'dashboard';
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item text-danger" href="logout.php">🚪 Logout</a></li>
+            <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
           </ul>
         </div>
       </nav>
