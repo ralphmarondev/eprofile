@@ -21,16 +21,16 @@ $middle_name = $_POST['middle_name'] ?? '';
 $last_name = $_POST['last_name'] ?? '';
 $suffix = $_POST['suffix'] ?? '';
 $birthday = $_POST['birthday'] ?? '';
-$b_place = $_POST['b_place'] ?? '';
+$birthplace = $_POST['birthplace'] ?? '';
 $gender = $_POST['gender'] ?? '';
 $civil_status = $_POST['civil_status'] ?? '';
 $citizen = $_POST['citizen'] ?? '';
 $religion = $_POST['religion'] ?? '';
-$height = $_POST['height'] ?? '';
-$weight = $_POST['weight'] ?? '';
+$height_cm = $_POST['height_cm'] ?? '';
+$weight_kg = $_POST['weight_kg'] ?? '';
 $mother_name = $_POST['mother_name'] ?? '';
 $father_name = $_POST['father_name'] ?? '';
-$voter = $_POST['voter'] ?? '';
+$is_voter = $_POST['is_voter'] ?? '';
 $is_beneficiary = $_POST['is_beneficiary'] ?? '';
 $categories = $_POST['beneficiary'] ?? '';
 $barangay = $_POST['barangay'] ?? '';
@@ -61,9 +61,9 @@ if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) 
 }
 
 $sql = "UPDATE residents SET 
-    first_name=?, middle_name=?, last_name=?, suffix=?, birthday=?, b_place=?,
-    gender=?, civil_status=?, citizen=?, religion=?, height=?, weight=?,
-    motherName=?, fatherName=?, voter=?, beneficiary=?, categories=?, barangay=?,
+    first_name=?, middle_name=?, last_name=?, suffix=?, birthday=?, birthplace=?,
+    gender=?, civil_status=?, citizen=?, religion=?, height_cm=?, weight_kg=?,
+    mother_name=?, father_name=?, is_voter=?, is_beneficiary=?, categories=?, barangay=?,
     street=?, email=?, contact_number=?" .
 	($picturePath ? ", picture=?" : "") . "
     WHERE id=? AND is_deleted = 0";
@@ -78,16 +78,16 @@ if ($picturePath) {
 		$last_name,
 		$suffix,
 		$birthday,
-		$b_place,
+		$birthplace,
 		$gender,
 		$civil_status,
 		$citizen,
 		$religion,
-		$height,
-		$weight,
+		$height_cm,
+		$weight_kg,
 		$mother_name,
 		$father_name,
-		$voter,
+		$is_voter,
 		$is_beneficiary,
 		$categories,
 		$barangay,
@@ -105,16 +105,16 @@ if ($picturePath) {
 		$last_name,
 		$suffix,
 		$birthday,
-		$b_place,
+		$birthplace,
 		$gender,
 		$civil_status,
 		$citizen,
 		$religion,
-		$height,
-		$weight,
+		$height_cm,
+		$weight_kg,
 		$mother_name,
 		$father_name,
-		$voter,
+		$is_voter,
 		$is_beneficiary,
 		$categories,
 		$barangay,

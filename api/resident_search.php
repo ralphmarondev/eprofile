@@ -7,7 +7,7 @@ $name = isset($data['name']) ? trim($data['name']) : '';
 $barangay = isset($data['barangay']) ? trim($data['barangay']) : '';
 
 try {
-	$query = "SELECT * FROM residents WHERE 1=1";
+	$query = "SELECT * FROM residents WHERE is_deleted = 0";
 	$params = [];
 	$types = "";
 

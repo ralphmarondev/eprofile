@@ -2,13 +2,11 @@
 include 'connection.php';
 header('Content-Type: application/json');
 
-// Only allow POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => '0', 'error' => 'Invalid request method']);
     exit;
 }
 
-// Extract and sanitize input
 function sanitize($key)
 {
     return isset($_POST[$key]) ? trim($_POST[$key]) : '';
@@ -19,16 +17,16 @@ $middle_name = sanitize('middle_name');
 $last_name = sanitize('last_name');
 $suffix = sanitize('suffix');
 $birthday = sanitize('birthday');
-$b_place = sanitize('b_place');
+$birthplace = sanitize('birthplace');
 $gender = sanitize('gender');
 $civil_status = sanitize('civil_status');
 $citizen = sanitize('citizen');
 $religion = sanitize('religion');
-$height = sanitize('height');
-$weight = sanitize('weight');
-$motherName = sanitize('mother_name');
-$fatherName = sanitize('father_name');
-$voter = sanitize('voter');
+$height_cm = sanitize('height_cm');
+$weight_kg = sanitize('weight_kg');
+$mother_name = sanitize('mother_name');
+$father_name = sanitize('father_name');
+$is_voter = sanitize('is_voter');
 $is_beneficiary = sanitize('is_beneficiary');
 $categories = sanitize('beneficiary'); // comma-separated
 $barangay = sanitize('barangay');
@@ -36,7 +34,6 @@ $street = sanitize('street');
 $email = sanitize('email');
 $contact_number = sanitize('contact_number');
 
-// Validate required fields
 if ($first_name === '' || $last_name === '' || $gender === '' || $birthday === '') {
     echo json_encode(['success' => '0', 'error' => 'Missing required fields']);
     exit;
@@ -65,8 +62,8 @@ if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) 
 
 try {
     $sql = $mysqli->prepare("INSERT INTO residents (
-        first_name, middle_name, last_name, suffix, gender, birthday, b_place, civil_status,
-        citizen, religion, height, weight, motherName, fatherName, voter, beneficiary,
+        first_name, middle_name, last_name, suffix, gender, birthday, birthplace, civil_status,
+        citizen, religion, height_cm, weight_kg, mother_name, father_name, is_voter, is_beneficiary,
         categories, barangay, street, contact_number, email, picture
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
@@ -78,15 +75,15 @@ try {
         $suffix,
         $gender,
         $birthday,
-        $b_place,
+        $birthplace,
         $civil_status,
         $citizen,
         $religion,
-        $height,
-        $weight,
-        $motherName,
-        $fatherName,
-        $voter,
+        $height_cm,
+        $weight_kg,
+        $mother_name,
+        $father_name,
+        $is_voter,
         $is_beneficiary,
         $categories,
         $barangay,

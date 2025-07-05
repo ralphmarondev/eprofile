@@ -40,7 +40,7 @@ $residentId = intval($_GET['id']);
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Birth Place</label>
-						<input type="text" class="form-control" name="b_place" id="b_place" placeholder="Enter birthplace" required>
+						<input type="text" class="form-control" name="birthplace" id="birthplace" placeholder="Enter birthplace" required>
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Gender</label>
@@ -81,11 +81,11 @@ $residentId = intval($_GET['id']);
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Height (cm)</label>
-						<input type="text" class="form-control" name="height" id="height" placeholder="Enter height" required>
+						<input type="text" class="form-control" name="height_cm" id="height_cm" placeholder="Enter height" required>
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Weight (kg)</label>
-						<input type="text" class="form-control" name="weight" id="weight" placeholder="Enter weight" required>
+						<input type="text" class="form-control" name="weight_kg" id="weight_kg" placeholder="Enter weight" required>
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Mother's Name</label>
@@ -111,7 +111,7 @@ $residentId = intval($_GET['id']);
 					<!-- Voter -->
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Are you a Voter?</label>
-						<select class="form-select" name="voter" id="voter" required>
+						<select class="form-select" name="is_voter" id="is_voter" required>
 							<option value="">Choose...</option>
 							<option value="Yes">Yes</option>
 							<option value="No">No</option>
@@ -121,7 +121,7 @@ $residentId = intval($_GET['id']);
 					<!-- Beneficiary -->
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Are you a Beneficiary?</label>
-						<select class="form-select" name="is_beneficiary" id="isBeneficiary" required>
+						<select class="form-select" name="is_beneficiary" id="is_beneficiary" required>
 							<option value="">Choose...</option>
 							<option value="Yes">Yes</option>
 							<option value="No">No</option>
@@ -337,7 +337,7 @@ $residentId = intval($_GET['id']);
 
 	showStep(currentStep);
 
-	document.getElementById("isBeneficiary").addEventListener("change", function () {
+	document.getElementById("is_beneficiary").addEventListener("change", function () {
 		const isYes = this.value === "Yes";
 		document.getElementById("beneficiaryOptions").style.display = isYes ? "block" : "none";
 	});
@@ -376,17 +376,17 @@ $residentId = intval($_GET['id']);
 					document.getElementById('last_name').value = r.last_name;
 					document.getElementById('suffix').value = r.suffix;
 					document.getElementById('birthday').value = r.birthday;
-					document.getElementById('b_place').value = r.b_place;
+					document.getElementById('birthplace').value = r.birthplace;
 					document.getElementById('gender').value = r.gender;
 					document.getElementById('civil_status').value = r.civil_status;
 					document.getElementById('citizen').value = r.citizen;
 					document.getElementById('religion').value = r.religion;
-					document.getElementById('height').value = r.height;
-					document.getElementById('weight').value = r.weight;
-					document.getElementById('mother_name').value = r.motherName;
-					document.getElementById('father_name').value = r.fatherName;
-					document.getElementById('voter').value = r.voter;
-					document.getElementById('isBeneficiary').value = r.beneficiary;
+					document.getElementById('height_cm').value = r.height_cm;
+					document.getElementById('weight_kg').value = r.weight_kg;
+					document.getElementById('mother_name').value = r.mother_name;
+					document.getElementById('father_name').value = r.father_name;
+					document.getElementById('is_voter').value = r.is_voter;
+					document.getElementById('is_beneficiary').value = r.is_beneficiary;
 
 					// If 'Yes', show categories and populate
 					if (r.beneficiary === "Yes") {

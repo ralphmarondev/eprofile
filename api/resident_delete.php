@@ -3,13 +3,10 @@ header('Content-Type: application/json');
 require_once 'connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  // Get raw input
   $input = json_decode(file_get_contents('php://input'), true);
   $id = isset($input['id']) ? intval($input['id']) : 0;
 
   if ($id > 0) {
-    // Prepare and execute delete query
-    // $stmt = $mysqli->prepare("DELETE FROM residents WHERE id = ?");
     $stmt = $mysqli->prepare("UPDATE residents SET is_deleted = 1 WHERE id = ?");
     $stmt->bind_param("i", $id);
 

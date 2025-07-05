@@ -2,20 +2,16 @@
 require_once 'connection.php';
 header('Content-Type: application/json');
 
-// make sure you're using the right mysqli instance
 try {
-    // Total population (not deleted)
     $populationQuery = "SELECT COUNT(*) AS total FROM residents WHERE is_deleted = 0";
     $populationResult = $mysqli->query($populationQuery);
     $totalPopulation = $populationResult->fetch_assoc()['total'];
 
-    // Total voters (Yes and not deleted)
-    $votersQuery = "SELECT COUNT(*) AS total FROM residents WHERE is_deleted = 0 AND voter = 'Yes'";
+    $votersQuery = "SELECT COUNT(*) AS total FROM residents WHERE is_deleted = 0 AND is_voter = 'Yes'";
     $votersResult = $mysqli->query($votersQuery);
     $totalVoters = $votersResult->fetch_assoc()['total'];
 
-    // Total beneficiaries (Yes and not deleted)
-    $beneficiariesQuery = "SELECT COUNT(*) AS total FROM residents WHERE is_deleted = 0 AND beneficiary = 'Yes'";
+    $beneficiariesQuery = "SELECT COUNT(*) AS total FROM residents WHERE is_deleted = 0 AND is_beneficiary = 'Yes'";
     $beneficiariesResult = $mysqli->query($beneficiariesQuery);
     $totalBeneficiaries = $beneficiariesResult->fetch_assoc()['total'];
 

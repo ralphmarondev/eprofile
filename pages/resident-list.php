@@ -360,16 +360,16 @@
           document.getElementById('suffix').value = r.suffix;
           document.getElementById('gender').value = r.gender;
           document.getElementById('birthday').value = r.birthday;
-          document.getElementById('b_place').value = r.b_place;
+          document.getElementById('b_place').value = r.birthplace;
           document.getElementById('civil_status').value = r.civil_status;
           document.getElementById('citizen').value = r.citizen;
           document.getElementById('religion').value = r.religion;
-          document.getElementById('height').value = r.height;
-          document.getElementById('weight').value = r.weight;
-          document.getElementById('mother_name').value = r.motherName;
-          document.getElementById('father_name').value = r.fatherName;
-          document.getElementById('voter').value = r.voter;
-          document.getElementById('beneficiary').value = r.beneficiary;
+          document.getElementById('height').value = r.height_cm;
+          document.getElementById('weight').value = r.weight_kg;
+          document.getElementById('mother_name').value = r.mother_name;
+          document.getElementById('father_name').value = r.father_name;
+          document.getElementById('voter').value = r.is_voter;
+          document.getElementById('beneficiary').value = r.is_beneficiary;
 
           // Address & contact
           document.getElementById('barangay').value = r.barangay;
@@ -530,7 +530,7 @@
         const tbody = document.getElementById('residentTableBody');
         tbody.innerHTML = '';
 
-        if (data.success === "1") {
+        if (data.success === "1" && data.residents.length > 0) {
           data.residents.forEach((r, i) => {
             const tr = document.createElement('tr');
             tr.innerHTML = `

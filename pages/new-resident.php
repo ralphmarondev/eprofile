@@ -30,7 +30,8 @@
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Birth Place</label>
-						<input type="text" class="form-control" name="b_place" id="b_place" placeholder="Enter birthplace" required>
+						<input type="text" class="form-control" name="birthplace" id="birthplace" placeholder="Enter birthplace"
+							required>
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Gender</label>
@@ -71,11 +72,11 @@
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Height (cm)</label>
-						<input type="text" class="form-control" name="height" id="height" placeholder="Enter height" required>
+						<input type="text" class="form-control" name="height_cm" id="height_cm" placeholder="Enter height" required>
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Weight (kg)</label>
-						<input type="text" class="form-control" name="weight" id="weight" placeholder="Enter weight" required>
+						<input type="text" class="form-control" name="weight_kg" id="weight_kg" placeholder="Enter weight" required>
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Mother's Name</label>
@@ -101,7 +102,7 @@
 					<!-- Voter -->
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Are you a Voter?</label>
-						<select class="form-select" name="voter" id="voter" required>
+						<select class="form-select" name="is_voter" id="is_voter" required>
 							<option value="">Choose...</option>
 							<option value="Yes">Yes</option>
 							<option value="No">No</option>
@@ -111,14 +112,14 @@
 					<!-- Beneficiary -->
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Are you a Beneficiary?</label>
-						<select class="form-select" name="is_beneficiary" id="isBeneficiary" required>
+						<select class="form-select" name="is_beneficiary" id="is_beneficiary" required>
 							<option value="">Choose...</option>
 							<option value="Yes">Yes</option>
 							<option value="No">No</option>
 						</select>
 					</div>
 
-					<!-- Cute Beneficiary Categories (conditionally shown) -->
+					<!-- Beneficiary Categories (conditionally shown) -->
 					<div class="mb-3 col-md-12" id="beneficiaryOptions" style="display: none;">
 						<div class="card border border-pink-subtle p-3 shadow-sm">
 							<label class="form-label fw-semibold text-pink mb-2">Select Beneficiary Categories</label>
@@ -327,7 +328,7 @@
 
 						const qrData = await response.json();
 						if (qrData.success) {
-							// 🪄 Show modal with QR code
+							// Show modal with QR code
 							document.getElementById('qrImage').src = imageData;
 							new bootstrap.Modal(document.getElementById('qrModal')).show();
 						} else {
@@ -339,17 +340,17 @@
 					currentStep = 1;
 					showStep(currentStep);
 				} else {
-					alert("❌ Failed: " + data.error);
+					alert("Failed: " + data.error);
 				}
 			})
 			.catch(err => {
-				alert("⚠️ Server error: " + err);
+				alert("Server error: " + err);
 			});
 	});
 
 	showStep(currentStep);
 
-	document.getElementById("isBeneficiary").addEventListener("change", function () {
+	document.getElementById("is_beneficiary").addEventListener("change", function () {
 		const isYes = this.value === "Yes";
 		document.getElementById("beneficiaryOptions").style.display = isYes ? "block" : "none";
 	});
