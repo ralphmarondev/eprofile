@@ -54,16 +54,16 @@ CREATE TABLE residents (
     suffix VARCHAR(20),
     gender VARCHAR(10),
     birthday DATE,
-    b_place VARCHAR(255),
+    birthplace VARCHAR(255),
     civil_status VARCHAR(50),
     citizen VARCHAR(100),
     religion VARCHAR(100),
-    height VARCHAR(10),
-    weight VARCHAR(10),
-    motherName VARCHAR(255),
-    fatherName VARCHAR(255),
-    voter VARCHAR(10),
-    beneficiary VARCHAR(10),
+    height_cm VARCHAR(10),
+    weight_cm VARCHAR(10),
+    mother_name VARCHAR(255),
+    father_name VARCHAR(255),
+    is_voter VARCHAR(10),
+    is_beneficiary VARCHAR(10),
     categories TEXT,
     barangay VARCHAR(100),
     street VARCHAR(255),
@@ -84,8 +84,8 @@ CREATE TABLE residents (
 ```sql
 USE eprofile_db;
 
-INSERT INTO users (username, password)
-VALUES ('admin', password_hash('admin123'));
+INSERT INTO users (username, password, role)
+VALUES ('admin', password_hash('admin123'), 'user');
 ```
 
 ---
