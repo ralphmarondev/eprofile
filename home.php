@@ -151,7 +151,7 @@ $page = $_GET['page'] ?? 'dashboard';
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
+            <li><a class="dropdown-item text-danger" href="index.php">Logout</a></li>
           </ul>
         </div>
       </nav>
