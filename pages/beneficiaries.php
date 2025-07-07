@@ -112,7 +112,7 @@
 					<table class="table table-bordered table-hover" id="beneficiaryTable">
 						<thead class="table-light">
 							<tr>
-								<th>#</th>
+								<th>No</th>
 								<th>Full Name</th>
 								<th>Gender</th>
 								<th>Birthday</th>
@@ -124,8 +124,8 @@
 					</table>
 				</div>
 				<div class="modal-footer">
-					<button class="btn btn-outline-danger" onclick="printModalContent()">🖨️ Print</button>
-					<button class="btn btn-pink" onclick="downloadPdf()">⬇️ Download PDF</button>
+					<button class="btn btn-outline-danger" onclick="downloadPDF(currentCategory, true)">🖨️ Print</button>
+					<button class="btn btn-pink" onclick="downloadPDF(currentCategory)">⬇️ Download PDF</button>
 				</div>
 			</div>
 		</div>
@@ -157,6 +157,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script>
+	let currentCategory = null;
+
 	const categoryLabels = {
 		"PWD": "Person with Disabilities (PWD)",
 		"4Ps": "Pantawid Pamilyang Pilipino Program (4Ps)",
@@ -180,6 +182,7 @@
 	document.querySelectorAll('.stat-card').forEach((card, index) => {
 		card.addEventListener('click', () => {
 			const category = Object.keys(categoryLabels)[index];
+			currentCategory = category;
 			showBeneficiariesModal(category);
 		});
 	});
@@ -225,9 +228,20 @@
 	// Print modal content
 	function printModalContent() {
 		const printContents = document.querySelector("#beneficiaryModal .modal-body").innerHTML;
+		const title = document.getElementById('beneficiaryModalLabel').textContent;
+
 		const printWindow = window.open('', '', 'height=800,width=1200');
-		printWindow.document.write('<html><head><title>Print</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"></head><body>');
-		printWindow.document.write('<h4>' + document.getElementById('beneficiaryModalLabel').textContent + '</h4>');
+		printWindow.document.write('<html><head><title>Print</title>');
+		printWindow.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
+		printWindow.document.write('</head><body>');
+		printWindow.document.write(`
+			<div style="display:flex; align-items:center; margin-bottom:10px;">
+				<img src="assets/img/logo.png" style="width:50px; height:50px; margin-right:10px;">
+				<div>
+					<h4 style="margin: 0;">${title}</h4>
+					<small>Municipality of Gonzaga, Cagayan</small>
+				</div>
+			</div>`);
 		printWindow.document.write(printContents);
 		printWindow.document.write('</body></html>');
 		printWindow.document.close();
@@ -235,18 +249,112 @@
 	}
 
 	// Download as PDF using jsPDF + html2canvas
-	async function downloadPdf() {
+	function downloadPDF(category = currentCategory, autoPrint = false) {
 		const { jsPDF } = window.jspdf;
-		const modalBody = document.querySelector("#beneficiaryModal .modal-body");
-		const canvas = await html2canvas(modalBody);
-		const imgData = canvas.toDataURL("image/png");
+		const logoUrl = 'assets/img/logo.png'; // Make sure this path is correct
 
 		const pdf = new jsPDF('p', 'mm', 'a4');
-		const imgProps = pdf.getImageProperties(imgData);
-		const pdfWidth = pdf.internal.pageSize.getWidth();
-		const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+		const imgWidth = 210;
+		const pageHeight = 297;
+		let pageNumber = 1;
 
-		pdf.addImage(imgData, 'PNG', 0, 10, pdfWidth, pdfHeight);
-		pdf.save(`${document.getElementById('beneficiaryModalLabel').textContent}.pdf`);
+		const currentDate = new Date();
+		const formattedDate = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
+
+		const categoryTitles = {
+			"PWD": "Persons With Disabilities (PWD)",
+			"4Ps": "Pantawid Pamilyang Pilipino Program (4Ps)",
+			"Farmer": "Farmers",
+			"SingleParent": "Single Parents",
+			"OFW": "Overseas Filipino Workers (OFW)",
+			"Indigent": "Indigents",
+			"SeniorCitizen": "Senior Citizens"
+		};
+
+		const categoryTitle = categoryTitles[category] || category;
+
+		function addHeader() {
+			pdf.setFont("times", "normal");
+			pdf.setFontSize(14);
+			pdf.text("Republic of the Philippines", 80, 23);
+			pdf.text("Province of Cagayan", 86, 29);
+			pdf.setFontSize(16);
+			pdf.text("MUNICIPALITY OF GONZAGA", 69, 35);
+
+			pdf.setLineWidth(0.3);
+			pdf.line(20, 38, 190, 38);
+
+			pdf.setFontSize(15);
+			pdf.text(`Beneficiary List: ${categoryTitle}`, 15, 50);
+			// pdf.setFontSize(10);
+			// pdf.text(`Generated on: ${formattedDate}`, 15, 55);
+		}
+
+		const logo = new Image();
+		logo.src = logoUrl;
+
+		logo.onload = function () {
+			pdf.addImage(logo, 'PNG', 10, 10, 25, 25);
+			addHeader();
+
+			html2canvas(document.querySelector(".modal-body")).then(canvas => {
+				const imgData = canvas.toDataURL("image/png");
+				const imgHeight = canvas.height * imgWidth / canvas.width;
+
+				let position = 60;
+				let heightLeft = imgHeight;
+
+				pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+				heightLeft -= (pageHeight - position);
+
+				while (heightLeft >= 0) {
+					position = 0;
+					pdf.addPage();
+					addHeader();
+					pdf.addImage(imgData, 'PNG', 0, 60, imgWidth, imgHeight);
+					heightLeft -= pageHeight;
+				}
+
+				const filename = `${category}_List_${formattedDate}.pdf`;
+				if (autoPrint) {
+					pdf.autoPrint();
+					window.open(pdf.output('bloburl'));
+				} else {
+					pdf.save(filename);
+				}
+			});
+		};
+
+		logo.onerror = function () {
+			console.warn("Logo failed to load. Proceeding without it.");
+			addHeader();
+
+			html2canvas(document.querySelector(".modal-body")).then(canvas => {
+				const imgData = canvas.toDataURL("image/png");
+				const imgHeight = canvas.height * imgWidth / canvas.width;
+
+				let position = 60;
+				let heightLeft = imgHeight;
+
+				pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+				heightLeft -= (pageHeight - position);
+
+				while (heightLeft >= 0) {
+					position = 0;
+					pdf.addPage();
+					addHeader();
+					pdf.addImage(imgData, 'PNG', 0, 60, imgWidth, imgHeight);
+					heightLeft -= pageHeight;
+				}
+
+				const filename = `${category}_List_${formattedDate}.pdf`;
+				if (autoPrint) {
+					pdf.autoPrint();
+					window.open(pdf.output('bloburl'));
+				} else {
+					pdf.save(filename);
+				}
+			});
+		};
 	}
 </script>
