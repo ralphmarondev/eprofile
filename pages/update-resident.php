@@ -242,7 +242,7 @@ $residentId = intval($_GET['id']);
 				</div>
 				<div class="d-flex justify-content-between">
 					<button type="button" class="btn btn-secondary" onclick="prevStep()">⬅️ Back</button>
-					<button type="submit" class="btn btn-success">✅ Update Resident</button>
+					<button type="submit" class="btn btn-success" id="submitBtn">✅ Update Resident</button>
 				</div>
 			</div>
 		</form>
@@ -316,6 +316,10 @@ $residentId = intval($_GET['id']);
 	document.getElementById('residentForm').addEventListener('submit', function (e) {
 		e.preventDefault();
 
+		const submitBtn = document.getElementById('submitBtn');
+		submitBtn.disabled = true;
+		submitBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>Updating...`;
+
 		const formData = new FormData(this);
 		const id = <?= json_encode($residentId) ?>;
 
@@ -334,6 +338,10 @@ $residentId = intval($_GET['id']);
 			})
 			.catch(err => {
 				alert("Server error: " + err);
+			})
+			.finally(() => {
+				submitBtn.disabled = false;
+				submitBtn.innerHTML = "✅ Update Resident";
 			});
 	});
 

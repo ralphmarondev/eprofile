@@ -232,7 +232,7 @@
 				</div>
 				<div class="d-flex justify-content-between">
 					<button type="button" class="btn btn-secondary" onclick="prevStep()">⬅️ Back</button>
-					<button type="submit" class="btn btn-success">✅ Save New Resident</button>
+					<button type="submit" class="btn btn-success" id="submitBtn">✅ Save New Resident</button>
 				</div>
 			</div>
 		</form>
@@ -305,6 +305,10 @@
 	document.getElementById('residentForm').addEventListener('submit', function (e) {
 		e.preventDefault();
 
+		const submitBtn = document.getElementById('submitBtn');
+		submitBtn.disabled = true;
+		submitBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>Saving...`;
+
 		const formData = new FormData(this);
 
 		fetch('api/resident_create.php', {
@@ -345,6 +349,10 @@
 			})
 			.catch(err => {
 				alert("Server error: " + err);
+			})
+			.finally(() => {
+				submitBtn.disabled = false;
+				submitBtn.innerHTML = "✅ Save New Resident";
 			});
 	});
 
