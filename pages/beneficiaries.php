@@ -95,6 +95,41 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Modal for Beneficiary List -->
+	<div class="modal fade" id="beneficiaryModal" tabindex="-1" aria-labelledby="beneficiaryModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-xl modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header bg-pink">
+					<div>
+						<h5 class="modal-title mb-1" id="beneficiaryModalLabel">Beneficiary List</h5>
+						<small id="beneficiaryModalSub"></small>
+					</div>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<table class="table table-bordered table-hover" id="beneficiaryTable">
+						<thead class="table-light">
+							<tr>
+								<th>#</th>
+								<th>Full Name</th>
+								<th>Gender</th>
+								<th>Birthday</th>
+								<th>Barangay</th>
+								<th>Contact</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-outline-danger" onclick="printModalContent()">🖨️ Print</button>
+					<button class="btn btn-pink" onclick="downloadPdf()">⬇️ Download PDF</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script>
@@ -116,4 +151,102 @@
 		.catch(err => {
 			console.error("Error fetching beneficiaries stats:", err);
 		});
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script>
+	const categoryLabels = {
+		"PWD": "Person with Disabilities (PWD)",
+		"4Ps": "Pantawid Pamilyang Pilipino Program (4Ps)",
+		"Farmer": "Farmers List",
+		"SingleParent": "Single Parent List",
+		"OFW": "Overseas Filipino Workers (OFW)",
+		"Indigent": "Indigent List",
+		"SeniorCitizen": "Senior Citizen List"
+	};
+
+	const shortLabels = {
+		"PWD": "PWD List",
+		"4Ps": "4Ps List",
+		"Farmer": "Farmers List",
+		"SingleParent": "Single Parent List",
+		"OFW": "OFW List",
+		"Indigent": "Indigent List",
+		"SeniorCitizen": "Senior Citizen List"
+	};
+
+	document.querySelectorAll('.stat-card').forEach((card, index) => {
+		card.addEventListener('click', () => {
+			const category = Object.keys(categoryLabels)[index];
+			showBeneficiariesModal(category);
+		});
+	});
+
+	function showBeneficiariesModal(category) {
+		const modalTitle = document.getElementById('beneficiaryModalLabel');
+		const modalSub = document.getElementById('beneficiaryModalSub');
+		const tableBody = document.querySelector('#beneficiaryTable tbody');
+
+		modalTitle.textContent = shortLabels[category];
+		modalSub.textContent = `Showing residents under ${categoryLabels[category]}`;
+		tableBody.innerHTML = '<tr><td colspan="6">Loading...</td></tr>';
+
+		fetch(`api/beneficiaries_list.php?category=${encodeURIComponent(category)}`)
+			.then(res => res.json())
+			.then(data => {
+				if (data.success === "1") {
+					tableBody.innerHTML = "";
+					data.residents.forEach((r, i) => {
+						const row = `
+							<tr>
+								<td>${i + 1}</td>
+								<td>${r.first_name} ${r.middle_name} ${r.last_name}</td>
+								<td>${r.gender}</td>
+								<td>${r.birthday}</td>
+								<td>${r.barangay}</td>
+								<td>${r.contact_number}</td>
+							</tr>`;
+						tableBody.innerHTML += row;
+					});
+				} else {
+					tableBody.innerHTML = `<tr><td colspan="6" class="text-danger">${data.message}</td></tr>`;
+				}
+			})
+			.catch(err => {
+				console.error(err);
+				tableBody.innerHTML = `<tr><td colspan="6" class="text-danger">Error fetching data.</td></tr>`;
+			});
+
+		new bootstrap.Modal(document.getElementById('beneficiaryModal')).show();
+	}
+
+	// Print modal content
+	function printModalContent() {
+		const printContents = document.querySelector("#beneficiaryModal .modal-body").innerHTML;
+		const printWindow = window.open('', '', 'height=800,width=1200');
+		printWindow.document.write('<html><head><title>Print</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"></head><body>');
+		printWindow.document.write('<h4>' + document.getElementById('beneficiaryModalLabel').textContent + '</h4>');
+		printWindow.document.write(printContents);
+		printWindow.document.write('</body></html>');
+		printWindow.document.close();
+		printWindow.print();
+	}
+
+	// Download as PDF using jsPDF + html2canvas
+	async function downloadPdf() {
+		const { jsPDF } = window.jspdf;
+		const modalBody = document.querySelector("#beneficiaryModal .modal-body");
+		const canvas = await html2canvas(modalBody);
+		const imgData = canvas.toDataURL("image/png");
+
+		const pdf = new jsPDF('p', 'mm', 'a4');
+		const imgProps = pdf.getImageProperties(imgData);
+		const pdfWidth = pdf.internal.pageSize.getWidth();
+		const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+		pdf.addImage(imgData, 'PNG', 0, 10, pdfWidth, pdfHeight);
+		pdf.save(`${document.getElementById('beneficiaryModalLabel').textContent}.pdf`);
+	}
 </script>
