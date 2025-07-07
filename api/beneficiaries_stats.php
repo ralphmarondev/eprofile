@@ -8,7 +8,7 @@ try {
 		"total_4ps" => 0,
 		"total_farmers" => 0,
 		"total_single_parent" => 0,
-		"total_ofw" => 0,
+		"total_scholar" => 0,
 		"total_indigent" => 0,
 		"total_senior_citizen" => 0
 	];
@@ -18,7 +18,7 @@ try {
 		"total_4ps" => "4Ps",
 		"total_farmers" => "Farmer",
 		"total_single_parent" => "SingleParent",
-		"total_ofw" => "OFW",
+		"total_scholar" => "Scholar",
 		"total_indigent" => "Indigent",
 		"total_senior_citizen" => "SeniorCitizen"
 	];

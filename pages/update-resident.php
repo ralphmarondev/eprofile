@@ -136,10 +136,6 @@ $residentId = intval($_GET['id']);
 							<div class="row">
 								<div class="col-md-4">
 									<div class="form-check">
-										<input class="form-check-input beneficiary-option" type="checkbox" value="PWD" id="catPWD">
-										<label class="form-check-label" for="catPWD">PWD</label>
-									</div>
-									<div class="form-check">
 										<input class="form-check-input beneficiary-option" type="checkbox" value="4Ps" id="cat4Ps">
 										<label class="form-check-label" for="cat4Ps">4Ps</label>
 									</div>
@@ -155,15 +151,19 @@ $residentId = intval($_GET['id']);
 										<label class="form-check-label" for="catSingle">Single Parent</label>
 									</div>
 									<div class="form-check">
-										<input class="form-check-input beneficiary-option" type="checkbox" value="OFW" id="catOFW">
-										<label class="form-check-label" for="catOFW">OFW</label>
+										<input class="form-check-input beneficiary-option" type="checkbox" value="Scholar" id="catScholar">
+										<label class="form-check-label" for="catScholar">Scholar</label>
 									</div>
 								</div>
 								<div class="col-md-4">
-									<div class="form-check">
+									<!-- <div class="form-check">
 										<input class="form-check-input beneficiary-option" type="checkbox" value="Indigent"
 											id="catIndigent">
 										<label class="form-check-label" for="catIndigent">Indigent</label>
+									</div> -->
+									<div class="form-check">
+										<input class="form-check-input beneficiary-option" type="checkbox" value="PWD" id="catPWD">
+										<label class="form-check-label" for="catPWD">PWD</label>
 									</div>
 									<div class="form-check">
 										<input class="form-check-input beneficiary-option" type="checkbox" value="SeniorCitizen"
@@ -313,7 +313,7 @@ $residentId = intval($_GET['id']);
 		}
 	}
 
-	document.getElementById('residentForm').addEventListener('submit', function (e) {
+	document.getElementById('residentForm').addEventListener('submit', function(e) {
 		e.preventDefault();
 
 		const submitBtn = document.getElementById('submitBtn');
@@ -324,9 +324,9 @@ $residentId = intval($_GET['id']);
 		const id = <?= json_encode($residentId) ?>;
 
 		fetch(`api/resident_update.php?id=${id}`, {
-			method: 'POST',
-			body: formData
-		})
+				method: 'POST',
+				body: formData
+			})
 			.then(res => res.json())
 			.then(data => {
 				if (data.success === "1") {
@@ -347,7 +347,7 @@ $residentId = intval($_GET['id']);
 
 	showStep(currentStep);
 
-	document.getElementById("is_beneficiary").addEventListener("change", function () {
+	document.getElementById("is_beneficiary").addEventListener("change", function() {
 		const isYes = this.value === "Yes";
 		document.getElementById("beneficiaryOptions").style.display = isYes ? "block" : "none";
 	});
@@ -364,7 +364,7 @@ $residentId = intval($_GET['id']);
 	const pictureInput = document.getElementById('pictureInput');
 	const picturePreview = document.getElementById('picturePreview');
 
-	pictureInput.addEventListener('change', function () {
+	pictureInput.addEventListener('change', function() {
 		const file = this.files[0];
 		if (file) {
 			picturePreview.src = URL.createObjectURL(file);
@@ -399,7 +399,7 @@ $residentId = intval($_GET['id']);
 					document.getElementById('is_beneficiary').value = r.is_beneficiary;
 
 					// If 'Yes', show categories and populate
-					if (r.beneficiary === "Yes") {
+					if (r.is_beneficiary === "Yes") {
 						document.getElementById("beneficiaryOptions").style.display = "block";
 						const selected = (r.categories || "").split(',').map(c => c.trim());
 						selected.forEach(cat => {

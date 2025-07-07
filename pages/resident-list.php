@@ -44,7 +44,7 @@
       <table class="table table-bordered table-hover align-middle">
         <thead class="table-light">
           <tr>
-            <th style="width: 5%;">#</th>
+            <th style="width: 5%;">No</th>
             <th style="width: 29%;">Full Name</th>
             <th style="width: 23%;">Email</th>
             <th style="width: 23%;">Barangay</th>
@@ -166,7 +166,7 @@
                   <label>Beneficiary:</label>
                   <input class="form-control" name="beneficiary" id="beneficiary" placeholder="Yes/No" readonly>
                 </div>
-                <div class="mb-3 form-group col-md-12">
+                <div id="viewCategoriesWrapper" class="mb-3 form-group col-md-12">
                   <label>Beneficiary Categories:</label>
                   <div id="categories" class="check"></div>
                 </div>
@@ -378,14 +378,11 @@
           document.getElementById('email').value = r.email;
 
           // Categories
+          const categoriesWrapper = document.getElementById('viewCategoriesWrapper');
           const categoriesDiv = document.getElementById('categories');
           categoriesDiv.innerHTML = `
             <div class="row">
               <div class="col-md-4">
-                <div class="form-check">
-                  <input class="form-check-input beneficiary-option" type="checkbox" value="PWD" id="catPWD" disabled>
-                  <label class="form-check-label" for="catPWD">PWD</label>
-                </div>
                 <div class="form-check">
                   <input class="form-check-input beneficiary-option" type="checkbox" value="4Ps" id="cat4Ps" disabled>
                   <label class="form-check-label" for="cat4Ps">4Ps</label>
@@ -401,14 +398,14 @@
                   <label class="form-check-label" for="catSingle">Single Parent</label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input beneficiary-option" type="checkbox" value="OFW" id="catOFW" disabled>
-                  <label class="form-check-label" for="catOFW">OFW</label>
+                  <input class="form-check-input beneficiary-option" type="checkbox" value="Scholar" id="catScholar" disabled>
+                  <label class="form-check-label" for="catScholar">Scholar</label>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-check">
-                  <input class="form-check-input beneficiary-option" type="checkbox" value="Indigent" id="catIndigent" disabled>
-                  <label class="form-check-label" for="catIndigent">Indigent</label>
+                  <input class="form-check-input beneficiary-option" type="checkbox" value="PWD" id="catPWD" disabled>
+                  <label class="form-check-label" for="catPWD">PWD</label>
                 </div>
                 <div class="form-check">
                   <input class="form-check-input beneficiary-option" type="checkbox" value="SeniorCitizen" id="catSenior" disabled>
@@ -418,15 +415,24 @@
             </div>
           `;
 
-          if (r.categories) {
+          if (r.is_beneficiary === "Yes" && r.categories) {
+            categoriesDiv.style.display = 'block';
+
             const selected = r.categories.split(',').map(c => c.trim());
+            console.log("✔️ Categories from DB:", selected);
+
             selected.forEach(cat => {
               const checkbox = categoriesDiv.querySelector(`input[value="${cat}"]`);
-              if (checkbox) checkbox.checked = true;
+              if (checkbox) {
+                checkbox.checked = true;
+              } else {
+                console.warn(`No checkbox found for category: "${cat}"`);
+              }
             });
+          } else {
+            categoriesDiv.style.display = 'none';
+            categoriesWrapper.style.display = 'none';
           }
-
-
           modal.show();
         } else {
           alert("Resident not found.");
@@ -481,10 +487,14 @@
     }
 
     fetch('api/resident_delete.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: deleteResidentId })
-    })
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id: deleteResidentId
+        })
+      })
       .then(res => res.json())
       .then(data => {
         if (data.success === "1") {
@@ -521,10 +531,12 @@
     };
 
     fetch('api/resident_search.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    })
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      })
       .then(res => res.json())
       .then(data => {
         const tbody = document.getElementById('residentTableBody');

@@ -42,7 +42,7 @@
 		</div>
 	</div>
 	<div class="col-6 col-md-3">
-		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: var(--blue-2);">
+		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: var(--blue-1);">
 			<div class="card-body d-flex flex-column align-items-center justify-content-center">
 				<i class="bi bi-people-fill stat-icon"></i>
 				<div class="stat-title">4P'S</div>
@@ -51,7 +51,7 @@
 		</div>
 	</div>
 	<div class="col-6 col-md-3">
-		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: var(--blue-3);">
+		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: var(--blue-1);">
 			<div class="card-body d-flex flex-column align-items-center justify-content-center">
 				<i class="bi bi-tree-fill stat-icon"></i>
 				<div class="stat-title">Farmers</div>
@@ -60,7 +60,7 @@
 		</div>
 	</div>
 	<div class="col-6 col-md-3">
-		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: var(--blue-4);">
+		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: var(--blue-1);">
 			<div class="card-body d-flex flex-column align-items-center justify-content-center">
 				<i class="bi bi-people-fill stat-icon"></i>
 				<div class="stat-title">Single Parent</div>
@@ -71,13 +71,13 @@
 	<div class="col-6 col-md-3">
 		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: var(--blue-1);">
 			<div class="card-body d-flex flex-column align-items-center justify-content-center">
-				<i class="bi bi-airplane-fill stat-icon"></i>
-				<div class="stat-title">OFW</div>
-				<div class="stat-value" id="totalOfw">0</div>
+				<i class="bi bi bi-journal-check stat-icon"></i>
+				<div class="stat-title">Scholar</div>
+				<div class="stat-value" id="totalScholar">0</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-6 col-md-3">
+	<!-- <div class="col-6 col-md-3">
 		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: var(--blue-2);">
 			<div class="card-body d-flex flex-column align-items-center justify-content-center">
 				<i class="bi bi-heart-fill stat-icon"></i>
@@ -85,9 +85,9 @@
 				<div class="stat-value" id="totalIndigent">0</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<div class="col-6 col-md-3">
-		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: var(--blue-3);">
+		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: var(--blue-1);">
 			<div class="card-body d-flex flex-column align-items-center justify-content-center">
 				<i class="bi bi-heart-fill stat-icon"></i>
 				<div class="stat-title">Senior Citizen</div>
@@ -141,8 +141,8 @@
 				document.getElementById('total4ps').textContent = data.total_4ps;
 				document.getElementById('totalFarmers').textContent = data.total_farmers;
 				document.getElementById('totalSingleParent').textContent = data.total_single_parent;
-				document.getElementById('totalOfw').textContent = data.total_ofw;
-				document.getElementById('totalIndigent').textContent = data.total_indigent;
+				document.getElementById('totalScholar').textContent = data.total_scholar;
+				// document.getElementById('totalIndigent').textContent = data.total_indigent;
 				document.getElementById('totalSeniorCitizen').textContent = data.total_senior_citizen;
 			} else {
 				console.error("Failed to fetch stats:", data.message);
@@ -164,8 +164,8 @@
 		"4Ps": "Pantawid Pamilyang Pilipino Program (4Ps)",
 		"Farmer": "Farmers List",
 		"SingleParent": "Single Parent List",
-		"OFW": "Overseas Filipino Workers (OFW)",
-		"Indigent": "Indigent List",
+		"Scholar": "Scholar List",
+		// "Indigent": "Indigent List",
 		"SeniorCitizen": "Senior Citizen List"
 	};
 
@@ -174,8 +174,8 @@
 		"4Ps": "4Ps List",
 		"Farmer": "Farmers List",
 		"SingleParent": "Single Parent List",
-		"OFW": "OFW List",
-		"Indigent": "Indigent List",
+		"Scholar": "Scholar List",
+		// "Indigent": "Indigent List",
 		"SeniorCitizen": "Senior Citizen List"
 	};
 
@@ -194,7 +194,7 @@
 
 		modalTitle.textContent = shortLabels[category];
 		modalSub.textContent = `Showing residents under ${categoryLabels[category]}`;
-		tableBody.innerHTML = '<tr><td colspan="6">Loading...</td></tr>';
+		tableBody.innerHTML = '<tr><td colspan="6" class="text-center">Loading...</td></tr>';
 
 		fetch(`api/beneficiaries_list.php?category=${encodeURIComponent(category)}`)
 			.then(res => res.json())
@@ -214,12 +214,12 @@
 						tableBody.innerHTML += row;
 					});
 				} else {
-					tableBody.innerHTML = `<tr><td colspan="6" class="text-danger">${data.message}</td></tr>`;
+					tableBody.innerHTML = `<tr><td colspan="6" class="text-center text-muted">${data.message}</td></tr>`;
 				}
 			})
 			.catch(err => {
 				console.error(err);
-				tableBody.innerHTML = `<tr><td colspan="6" class="text-danger">Error fetching data.</td></tr>`;
+				tableBody.innerHTML = `<tr><td colspan="6" class="text-center text-danger">Error fetching data.</td></tr>`;
 			});
 
 		new bootstrap.Modal(document.getElementById('beneficiaryModal')).show();
@@ -250,8 +250,10 @@
 
 	// Download as PDF using jsPDF + html2canvas
 	function downloadPDF(category = currentCategory, autoPrint = false) {
-		const { jsPDF } = window.jspdf;
-		const logoUrl = 'assets/img/logo.png'; // Make sure this path is correct
+		const {
+			jsPDF
+		} = window.jspdf;
+		const logoUrl = 'assets/img/logo.png';
 
 		const pdf = new jsPDF('p', 'mm', 'a4');
 		const imgWidth = 210;
@@ -266,8 +268,8 @@
 			"4Ps": "Pantawid Pamilyang Pilipino Program (4Ps)",
 			"Farmer": "Farmers",
 			"SingleParent": "Single Parents",
-			"OFW": "Overseas Filipino Workers (OFW)",
-			"Indigent": "Indigents",
+			"Scholar": "Scholars",
+			// "Indigent": "Indigents",
 			"SeniorCitizen": "Senior Citizens"
 		};
 
@@ -293,7 +295,7 @@
 		const logo = new Image();
 		logo.src = logoUrl;
 
-		logo.onload = function () {
+		logo.onload = function() {
 			pdf.addImage(logo, 'PNG', 10, 10, 25, 25);
 			addHeader();
 
@@ -325,7 +327,7 @@
 			});
 		};
 
-		logo.onerror = function () {
+		logo.onerror = function() {
 			console.warn("Logo failed to load. Proceeding without it.");
 			addHeader();
 

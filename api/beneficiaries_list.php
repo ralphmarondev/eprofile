@@ -25,10 +25,17 @@ try {
 		$residents[] = $row;
 	}
 
-	echo json_encode([
-		"success" => "1",
-		"residents" => $residents
-	]);
+	if (empty($residents)) {
+		echo json_encode([
+			"success" => "0",
+			"message" => "No residents found in this category."
+		]);
+	} else {
+		echo json_encode([
+			"success" => "1",
+			"residents" => $residents
+		]);
+	}
 } catch (Exception $e) {
 	echo json_encode([
 		"success" => "0",

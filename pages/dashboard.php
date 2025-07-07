@@ -42,7 +42,7 @@
 		</div>
 	</div>
 	<div class="col-6 col-md-3">
-		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: var(--blue-2);">
+		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: var(--blue-1);">
 			<div class="card-body d-flex flex-column align-items-center justify-content-center">
 				<i class="bi bi-people-fill stat-icon"></i>
 				<div class="stat-title">Population</div>
@@ -51,7 +51,7 @@
 		</div>
 	</div>
 	<div class="col-6 col-md-3">
-		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: var(--blue-3);">
+		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: var(--blue-1);">
 			<div class="card-body d-flex flex-column align-items-center justify-content-center">
 				<i class="bi bi-person-vcard-fill stat-icon"></i>
 				<div class="stat-title">Voters</div>
@@ -60,7 +60,7 @@
 		</div>
 	</div>
 	<div class="col-6 col-md-3">
-		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: var(--blue-4);">
+		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: var(--blue-1);">
 			<div class="card-body d-flex flex-column align-items-center justify-content-center">
 				<i class="bi bi-gift-fill stat-icon"></i>
 				<div class="stat-title">Beneficiaries</div>

@@ -126,10 +126,6 @@
 							<div class="row">
 								<div class="col-md-4">
 									<div class="form-check">
-										<input class="form-check-input beneficiary-option" type="checkbox" value="PWD" id="catPWD">
-										<label class="form-check-label" for="catPWD">PWD</label>
-									</div>
-									<div class="form-check">
 										<input class="form-check-input beneficiary-option" type="checkbox" value="4Ps" id="cat4Ps">
 										<label class="form-check-label" for="cat4Ps">4Ps</label>
 									</div>
@@ -145,15 +141,19 @@
 										<label class="form-check-label" for="catSingle">Single Parent</label>
 									</div>
 									<div class="form-check">
-										<input class="form-check-input beneficiary-option" type="checkbox" value="OFW" id="catOFW">
-										<label class="form-check-label" for="catOFW">OFW</label>
+										<input class="form-check-input beneficiary-option" type="checkbox" value="Scholar" id="catScholar">
+										<label class="form-check-label" for="catScholar">Scholar</label>
 									</div>
 								</div>
 								<div class="col-md-4">
-									<div class="form-check">
+									<!-- <div class="form-check">
 										<input class="form-check-input beneficiary-option" type="checkbox" value="Indigent"
 											id="catIndigent">
 										<label class="form-check-label" for="catIndigent">Indigent</label>
+									</div> -->
+									<div class="form-check">
+										<input class="form-check-input beneficiary-option" type="checkbox" value="PWD" id="catPWD">
+										<label class="form-check-label" for="catPWD">PWD</label>
 									</div>
 									<div class="form-check">
 										<input class="form-check-input beneficiary-option" type="checkbox" value="SeniorCitizen"

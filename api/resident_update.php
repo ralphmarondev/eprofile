@@ -47,13 +47,24 @@ if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) 
 	}
 
 	$tmpName = $_FILES['picture']['tmp_name'];
-	$originalName = basename($_FILES['picture']['name']);
-	$ext = pathinfo($originalName, PATHINFO_EXTENSION);
-	$filename = uniqid('img_') . '.' . $ext;
+	$ext = pathinfo($_FILES['picture']['name'], PATHINFO_EXTENSION);
+
+	$sanitizedFirstName = preg_replace('/[^a-zA-Z0-9_-]/', '', strtolower($first_name));
+	$timestamp = time();
+	$filename = "profile_{$sanitizedFirstName}_{$timestamp}." . strtolower($ext);
 	$destination = $uploadDir . $filename;
 
 	if (move_uploaded_file($tmpName, $destination)) {
-		$picturePath = $destination;
+		$picturePath = 'data/uploads/' . $filename;
+
+		// Delete old picture from DB if it exists
+		// $res = $mysqli->query("SELECT picture FROM residents WHERE id = $id AND is_deleted = 0");
+		// if ($res && $row = $res->fetch_assoc()) {
+		// 	$oldPicture = '../' . $row['picture'];
+		// 	if (!empty($row['picture']) && file_exists($oldPicture)) {
+		// 		unlink($oldPicture);
+		// 	}
+		// }
 	} else {
 		echo json_encode(['success' => "0", 'error' => 'Failed to upload image']);
 		exit;

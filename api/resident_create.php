@@ -45,7 +45,11 @@ if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) 
     $uploadDir = '../data/uploads/';
     $fileTmp = $_FILES['picture']['tmp_name'];
     $fileExt = pathinfo($_FILES['picture']['name'], PATHINFO_EXTENSION);
-    $fileName = uniqid('profile_', true) . '.' . strtolower($fileExt);
+
+    // Sanitize first name to avoid invalid characters in filename
+    $sanitizedFirstName = preg_replace('/[^a-zA-Z0-9_-]/', '', strtolower($first_name));
+    $timestamp = time();
+    $fileName = "profile_{$sanitizedFirstName}_{$timestamp}." . strtolower($fileExt);
     $destination = $uploadDir . $fileName;
 
     if (!is_dir($uploadDir)) {
@@ -53,7 +57,7 @@ if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) 
     }
 
     if (move_uploaded_file($fileTmp, $destination)) {
-        $picture_path = 'data/uploads/' . $fileName; // relative path to store in DB
+        $picture_path = 'data/uploads/' . $fileName;
     } else {
         echo json_encode(['success' => '0', 'error' => 'Failed to move uploaded file']);
         exit;
