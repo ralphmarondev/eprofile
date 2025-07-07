@@ -40,7 +40,8 @@ $residentId = intval($_GET['id']);
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Birth Place</label>
-						<input type="text" class="form-control" name="birthplace" id="birthplace" placeholder="Enter birthplace" required>
+						<input type="text" class="form-control" name="birthplace" id="birthplace" placeholder="Enter birthplace"
+							required>
 					</div>
 					<div class="mb-3 col-md-6">
 						<label class="form-label">Gender</label>
@@ -272,17 +273,18 @@ $residentId = intval($_GET['id']);
 		display: block;
 	}
 
+
 	.btn-pink {
-		background-color: #ff69b4;
+		background-color: var(--primary-border);
 		color: white;
 	}
 
 	.btn-pink:hover {
-		background-color: #ff4da6;
+		background-color: var(--primary-text);
 	}
 
 	.step-title {
-		color: #ff1493;
+		color: var(--primary-text);
 		font-weight: bold;
 	}
 </style>

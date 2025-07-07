@@ -3,7 +3,7 @@
 <style>
 	.stat-card {
 		aspect-ratio: 1 / 1;
-		background-color: #ffe4e9;
+		background-color: var(--primary-bg);
 		padding: 10px;
 		font-size: 0.9rem;
 		transition: transform 0.2s ease;
@@ -15,7 +15,7 @@
 
 	.stat-icon {
 		font-size: 1.6rem;
-		color: #ff69b4;
+		color: var(--primary-border);
 	}
 
 	.stat-title {
@@ -27,13 +27,13 @@
 	.stat-value {
 		font-size: 1.4rem;
 		font-weight: bold;
-		color: #d63384;
+		color: var(--primary-text);
 	}
 </style>
 
 <div class="row mb-4 g-3">
 	<div class="col-6 col-md-3">
-		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: #ffe4e9;">
+		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color:var(--blue-1);">
 			<div class="card-body d-flex flex-column align-items-center justify-content-center">
 				<i class="bi bi-house-door-fill stat-icon"></i>
 				<div class="stat-title">Barangays</div>
@@ -42,7 +42,7 @@
 		</div>
 	</div>
 	<div class="col-6 col-md-3">
-		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: #fff3f8;">
+		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: var(--blue-2);">
 			<div class="card-body d-flex flex-column align-items-center justify-content-center">
 				<i class="bi bi-people-fill stat-icon"></i>
 				<div class="stat-title">Population</div>
@@ -51,7 +51,7 @@
 		</div>
 	</div>
 	<div class="col-6 col-md-3">
-		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: #fce6ef;">
+		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: var(--blue-3);">
 			<div class="card-body d-flex flex-column align-items-center justify-content-center">
 				<i class="bi bi-person-vcard-fill stat-icon"></i>
 				<div class="stat-title">Voters</div>
@@ -60,7 +60,7 @@
 		</div>
 	</div>
 	<div class="col-6 col-md-3">
-		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: #f9d4eb;">
+		<div class="card text-center border-0 shadow rounded-4 stat-card" style="background-color: var(--blue-4);">
 			<div class="card-body d-flex flex-column align-items-center justify-content-center">
 				<i class="bi bi-gift-fill stat-icon"></i>
 				<div class="stat-title">Beneficiaries</div>

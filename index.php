@@ -7,26 +7,32 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" href="assets/img/logo.png" type="image/x-icon">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="assets/css/root.css">
 	<style>
 		.modal-content.cute-modal {
-			background-color: #fff0f5;
-			border: 2px solid #ff69b4;
-			color: #ff1493;
+			background-color: var(--primary-bg);
+			border: 2px solid var(--primary-border);
+			color: var(--primary-text);
 		}
 
 		.modal-header.cute-modal-header {
-			background-color: #ffe4e1;
+			background-color: var(--primary-bg);
 			border-bottom: none;
 		}
 
 		.modal-footer .btn-pink {
-			background-color: #ff69b4;
+			background-color: var(--primary-btn);
 			color: white;
 			border: none;
 		}
 
 		.modal-footer .btn-pink:hover {
-			background-color: #ff4da6;
+			background-color: var(--primary-btn-hover);
+		}
+
+		.step-title {
+			color: var(--primary-text);
+			font-weight: bold;
 		}
 
 		body {
@@ -35,11 +41,17 @@
 			height: 100vh;
 		}
 
-		.step-title {
-			color: #ff1493;
-			font-weight: bold;
+		.btn-theme {
+			background-color: var(--primary-btn);
+			color: white;
+			border: none;
+		}
+
+		.btn-theme:hover {
+			background-color: var(--primary-btn-hover);
 		}
 	</style>
+
 </head>
 
 <body>
@@ -57,7 +69,7 @@
 					<input type="password" class="form-control form-control" id="password" name="password"
 						placeholder="Enter password" required>
 				</div>
-				<button type="submit" class="btn w-100" style="background-color: #ff69b4; color: white;">
+				<button type="submit" class="btn w-100 btn-theme">
 					Login
 				</button>
 			</form>
@@ -68,7 +80,7 @@
 		</div>
 	</div>
 
-	<!-- 💖 Success Modal -->
+	<!-- Success Modal -->
 	<div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content rounded-4 cute-modal">
@@ -85,7 +97,7 @@
 		</div>
 	</div>
 
-	<!-- 🚨 Error Modal -->
+	<!-- Error Modal -->
 	<div class="modal fade" id="errorModal" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content rounded-4 cute-modal">

@@ -264,16 +264,16 @@
 	}
 
 	.btn-pink {
-		background-color: #ff69b4;
+		background-color: var(--primary-border);
 		color: white;
 	}
 
 	.btn-pink:hover {
-		background-color: #ff4da6;
+		background-color: var(--primary-text);
 	}
 
 	.step-title {
-		color: #ff1493;
+		color: var(--primary-text);
 		font-weight: bold;
 	}
 </style>

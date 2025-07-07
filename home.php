@@ -11,6 +11,7 @@ $page = $_GET['page'] ?? 'dashboard';
   <link rel="shortcut icon" href="assets/img/logo.png" type="image/x-icon">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="assets/css/root.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
   <style>
@@ -46,37 +47,29 @@ $page = $_GET['page'] ?? 'dashboard';
     }
 
     .step-title {
-      color: #ff1493;
+      color: var(--primary-text);
       font-weight: bold;
     }
 
     .nav-link,
     .accordion-button {
-      color: #ff69b4 !important;
+      color: var(--primary-text) !important;
     }
 
     .nav-link.active,
     .accordion-button:not(.collapsed) {
-      color: #ff1493 !important;
+      color: var(--primary-border) !important;
       font-weight: bold;
     }
 
     .nav-link:hover,
     .accordion-button:hover {
-      color: #ff4da6 !important;
+      color: var(--primary-btn-hover) !important;
     }
 
     .dropdown-menu .dropdown-item:hover {
       background-color: #ffe4f0;
-      color: #ff1493;
-    }
-
-    .text-pink {
-      color: #ff69b4 !important;
-    }
-
-    .text-pink:hover {
-      color: #ff4da6 !important;
+      color: var(--primary-btn-hover);
     }
   </style>
 </head>

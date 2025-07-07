@@ -306,28 +306,28 @@
 
 <style>
   .cute-modal {
-    background-color: #fff0f5;
-    border: 2px solid #ff69b4;
-    color: #ff1493;
+    background-color: var(--primary-bg);
+    border: 2px solid var(--primary-border);
+    color: var(--primary-text);
   }
 
   .cute-modal-header {
-    background-color: #ffe4e1;
+    background-color: var(--primary-bg);
     border-bottom: none;
   }
 
   .btn-pink {
-    background-color: #ff69b4;
+    background-color: var(--primary-border);
     color: white;
     border: none;
   }
 
   .btn-pink:hover {
-    background-color: #ff4da6;
+    background-color: var(--primary-text);
   }
 
   .step-title {
-    color: #ff1493;
+    color: var(--primary-text);
     font-weight: bold;
   }
 </style>
