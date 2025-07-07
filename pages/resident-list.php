@@ -273,13 +273,13 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content rounded-4 cute-modal">
           <div class="modal-header cute-modal-header">
-            <h5 class="modal-title">Yay! 🎉</h5>
+            <h5 class="modal-title">Success</h5>
           </div>
           <div class="modal-body">
-            You're logged in successfully!
+            Resident deleted successfully!
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-pink" id="goToDashboard">Continue</button>
+            <button type="button" class="btn btn-pink" id="goToDashboard">Close</button>
           </div>
         </div>
       </div>
@@ -290,13 +290,13 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content rounded-4 cute-modal">
           <div class="modal-header cute-modal-header">
-            <h5 class="modal-title">Oops! 😢</h5>
+            <h5 class="modal-title">Failed</h5>
           </div>
           <div class="modal-body" id="errorMessage">
             <!-- error message will be injected -->
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-pink" data-bs-dismiss="modal">Try Again</button>
+            <button type="button" class="btn btn-pink" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
@@ -497,10 +497,13 @@
       })
       .then(res => res.json())
       .then(data => {
-        if (data.success === "1") {
+        if (data.success == 1) {
           document.querySelector('#successModal .modal-body').textContent = "Resident deleted successfully!";
+
+          const deleteModalInstance = bootstrap.Modal.getInstance(document.getElementById('deleteModal'));
+          if (deleteModalInstance) deleteModalInstance.hide();
+
           successModal.show();
-          bootstrap.Modal.getInstance(document.getElementById('deleteModal')).hide();
 
           document.getElementById('goToDashboard').onclick = () => location.reload();
         } else {
