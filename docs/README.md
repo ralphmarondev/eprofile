@@ -59,7 +59,7 @@ CREATE TABLE residents (
     citizen VARCHAR(100),
     religion VARCHAR(100),
     height_cm VARCHAR(10),
-    weight_cm VARCHAR(10),
+    weight_kg VARCHAR(10),
     mother_name VARCHAR(255),
     father_name VARCHAR(255),
     is_voter VARCHAR(10),
