@@ -105,7 +105,7 @@
         </div>
         <div class="col-md-6 mb-3">
           <label>Birthplace</label>
-          <input type="text" class="form-control" id="b_place" readonly>
+          <input type="text" class="form-control" id="birthplace" readonly>
         </div>
         <div class="col-md-6 mb-3">
           <label>Civil Status</label>
@@ -161,7 +161,7 @@
                   document.getElementById('email').value = r.email;
                   document.getElementById('gender').value = r.gender;
                   document.getElementById('birthday').value = r.birthday;
-                  document.getElementById('b_place').value = r.b_place;
+                  document.getElementById('birthplace').value = r.birthplace;
                   document.getElementById('civil_status').value = r.civil_status;
                   document.getElementById('contact').value = r.contact_number;
                   document.getElementById('barangay').value = r.barangay;
