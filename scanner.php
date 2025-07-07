@@ -1,58 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>📷 Scan QR Code</title>
-	<link rel="shortcut icon" href="assets/img/logo.png" type="image/x-icon">
+  <link rel="shortcut icon" href="assets/img/logo.png" type="image/x-icon">
   <script src="https://unpkg.com/html5-qrcode"></script>
+  <link rel="stylesheet" href="assets/css/root.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
-      background-color: #fff0f5;
+      background-color: var(--primary-bg);
       font-family: 'Segoe UI', sans-serif;
     }
+
     .scanner-container {
       max-width: 600px;
       margin: 40px auto;
       background: #ffffff;
       padding: 30px;
-      border: 3px solid #ff69b4;
+      border: 3px solid var(--primary-border);
       border-radius: 20px;
       box-shadow: 0 0 10px rgba(255, 105, 180, 0.2);
     }
+
     h2 {
-      color: #ff1493;
+      color: var(--primary-text);
       font-weight: bold;
       margin-bottom: 20px;
     }
+
     #reader {
       width: 100%;
       margin-bottom: 20px;
     }
+
     #result {
       font-size: 1.2em;
       margin-bottom: 20px;
       color: green;
     }
+
     .btn-pink {
-      background-color: #ff69b4;
+      background-color: var(--primary-border);
       color: white;
       border: none;
     }
+
     .btn-pink:hover {
-      background-color: #ff4da6;
+      background-color: var(--primary-text);
     }
+
     .resident-info {
       text-align: left;
       margin-top: 20px;
       display: none;
     }
+
     .resident-info h4 {
-      color: #ff1493;
+      color: var(--primary-text);
     }
+
     .resident-info .form-control[readonly] {
-      background-color: #fdf2f8;
+      background-color: var(--primary-bg);
     }
+
     .camera-warning {
       color: red;
       display: none;
@@ -60,11 +72,13 @@
     }
   </style>
 </head>
+
 <body>
   <div class="scanner-container">
     <h2 class="text-center">📷 Scan QR Code</h2>
     <div id="reader"></div>
-    <div id="cameraWarning" class="text-center camera-warning">🚫 Camera access is not supported or allowed in this browser. Please try another browser or check your permissions.</div>
+    <div id="cameraWarning" class="text-center camera-warning">🚫 Camera access is not supported or allowed in this
+      browser. Please try another browser or check your permissions.</div>
     <div id="result" class="text-center">Waiting for scan...</div>
     <div class="text-center">
       <button onclick="restartScanner()" class="btn btn-pink">🔁 Scan Again</button>
@@ -186,4 +200,5 @@
     startScanner();
   </script>
 </body>
+
 </html>
