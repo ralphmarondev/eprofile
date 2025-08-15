@@ -69,14 +69,14 @@
 					<input type="password" class="form-control form-control" id="password" name="password"
 						placeholder="Enter password" required>
 				</div>
-				<button type="submit" class="btn w-100 btn-theme">
+				<button type="submit" class="btn w-100 btn-theme mb-3">
 					Login
 				</button>
 			</form>
-			<div class="text-center mt-3">
+			<!-- <div class="text-center mt-3">
 				<small class="text-muted">Don't have an account? <a href="register.php" class="text-decoration-none">Sign
 						up</a></small>
-			</div>
+			</div> -->
 		</div>
 	</div>
 
@@ -122,14 +122,14 @@
 		const errorMessage = document.getElementById('errorMessage');
 		const goToDashboard = document.getElementById('goToDashboard');
 
-		form.addEventListener('submit', function (e) {
+		form.addEventListener('submit', function(e) {
 			e.preventDefault();
 			const formData = new FormData(form);
 
 			fetch('api/user_login.php', {
-				method: 'POST',
-				body: formData
-			})
+					method: 'POST',
+					body: formData
+				})
 				.then(res => res.json())
 				.then(data => {
 					if (data.success === "1") {
@@ -150,7 +150,7 @@
 				});
 		});
 
-		goToDashboard.addEventListener('click', function () {
+		goToDashboard.addEventListener('click', function() {
 			window.location.href = 'home.php';
 		});
 	</script>
