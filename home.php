@@ -121,9 +121,29 @@ $page = $_GET['page'] ?? 'dashboard';
             href="?page=beneficiaries">Beneficiaries</a>
         </li>
 
-        <li class="nav-item mb-2">
-          <a class="nav-link <?= $page === 'admins' ? 'active' : '' ?>"
-            href="?page=admins">Admininistrators</a>
+        <!-- Administrator Dropdown -->
+        <li class="nav-item mb-2 ms-1">
+          <div class="accordion" id="accordionAdmins">
+            <div class="accordion-item border-0">
+              <h2 class="accordion-header" id="headingAdmins">
+                <button class="accordion-button collapsed bg-light text-start" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapseAdmins" style="box-shadow: none;">
+                  Administrators
+                </button>
+              </h2>
+              <div id="collapseAdmins"
+                class="accordion-collapse collapse <?= in_array($page, ['administrator-list', 'new-administrator']) ? 'show' : '' ?>">
+                <div class="accordion-body py-1 px-2">
+                  <ul class="nav flex-column">
+                    <li><a class="nav-link small <?= $page === 'administrator-list' ? 'active' : '' ?>"
+                        href="?page=administrator-list">Administrator List</a></li>
+                    <li><a class="nav-link small <?= $page === 'new-administrator' ? 'active' : '' ?>"
+                        href="?page=new-administrator">New Administrator</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
         </li>
       </ul>
     </div>
@@ -163,8 +183,13 @@ $page = $_GET['page'] ?? 'dashboard';
           exit;
         }
 
+        if ($page === 'administrators') {
+          header("Location: ?page=administrator-list");
+          exit;
+        }
+
         // Define safe/allowed pages
-        $allowedPages = ['dashboard', 'resident-list', 'new-resident', 'update-resident', 'beneficiaries', 'admins'];
+        $allowedPages = ['dashboard', 'resident-list', 'new-resident', 'update-resident', 'beneficiaries', 'administrator-list', 'new-administrator'];
 
         // Default to 404 if not allowed
         $pageFile = in_array($page, $allowedPages)
