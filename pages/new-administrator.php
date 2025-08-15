@@ -40,7 +40,7 @@
 				</div>
 			</div>
 			<div class="text-end">
-				<button type="submit" class="btn btn-pink">Save New Admin</button>
+				<button type="submit" class="btn btn-pink" id="submitBtn">Save New Admin</button>
 			</div>
 		</form>
 	</div>
@@ -73,5 +73,36 @@
 </style>
 
 <script>
+	const form = document.getElementById('newAdminForm');
 
+	form.addEventListener('submit', function(e) {
+		e.preventDefault();
+		const submitBtn = document.getElementById('submitBtn');
+		submitBtn.disabled = true;
+		submitBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>Saving...`;
+
+		const formData = new FormData(form);
+
+		fetch('api/user_register.php', {
+				method: 'POST',
+				body: formData
+			})
+			.then(res => res.json())
+			.then(data => {
+				if (data.success === '1') {
+					alert(data.message);
+					form.reset();
+				} else {
+					alert('Error: ' + data.error);
+				}
+			})
+			.catch(err => {
+				console.error(err);
+				alert('Something went wrong. Check console.');
+			})
+			.finally(() => {
+				submitBtn.disabled = false;
+				submitBtn.innerHTML = "Save New Admin";
+			});
+	});
 </script>
