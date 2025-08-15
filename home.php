@@ -120,6 +120,11 @@ $page = $_GET['page'] ?? 'dashboard';
           <a class="nav-link <?= $page === 'beneficiaries' ? 'active' : '' ?>"
             href="?page=beneficiaries">Beneficiaries</a>
         </li>
+
+        <li class="nav-item mb-2">
+          <a class="nav-link <?= $page === 'admins' ? 'active' : '' ?>"
+            href="?page=admins">Admininistrators</a>
+        </li>
       </ul>
     </div>
 
@@ -159,7 +164,7 @@ $page = $_GET['page'] ?? 'dashboard';
         }
 
         // Define safe/allowed pages
-        $allowedPages = ['dashboard', 'resident-list', 'new-resident', 'update-resident', 'beneficiaries'];
+        $allowedPages = ['dashboard', 'resident-list', 'new-resident', 'update-resident', 'beneficiaries', 'admins'];
 
         // Default to 404 if not allowed
         $pageFile = in_array($page, $allowedPages)
