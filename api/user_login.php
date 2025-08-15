@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $sql = $mysqli->prepare("SELECT id, email, password, role FROM users WHERE email = ?");
+    $sql = $mysqli->prepare("SELECT id, email, password, role FROM users WHERE email = ? AND role = 'admin'");
     $sql->bind_param("s", $email);
     $sql->execute();
     $result = $sql->get_result();
@@ -28,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
       echo json_encode(['success' => '0', 'error' => 'Invalid email or password']);
     }
-
     $sql->close();
   } else {
     echo json_encode(['success' => '0', 'error' => 'Missing parameters']);
