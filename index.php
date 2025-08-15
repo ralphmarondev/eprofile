@@ -114,6 +114,30 @@
 		</div>
 	</div>
 
+	<!-- Toast Container -->
+	<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+		<!-- Success Toast -->
+		<div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+			<div class="d-flex">
+				<div class="toast-body">
+					You’re logged in successfully! 🎉
+				</div>
+				<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+			</div>
+		</div>
+
+		<!-- Error Toast -->
+		<div id="errorToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+			<div class="d-flex">
+				<div class="toast-body" id="errorMessage">
+					Something went wrong.
+				</div>
+				<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+			</div>
+		</div>
+	</div>
+
+
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script>
 		const form = document.getElementById('login-form');
@@ -121,6 +145,16 @@
 		const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
 		const errorMessage = document.getElementById('errorMessage');
 		const goToDashboard = document.getElementById('goToDashboard');
+
+		const successToastEl = document.getElementById('successToast');
+		const errorToastEl = document.getElementById('errorToast');
+
+		const successToast = new bootstrap.Toast(successToastEl, {
+			delay: 3000
+		});
+		const errorToast = new bootstrap.Toast(errorToastEl, {
+			delay: 3000
+		});
 
 		form.addEventListener('submit', function(e) {
 			e.preventDefault();
@@ -138,20 +172,19 @@
 						localStorage.setItem("user_email", data.email);
 						localStorage.setItem("user_role", data.role);
 
-						successModal.show();
+						successToast.show();
+						setTimeout(() => {
+							window.location.href = 'home.php';
+						}, 3000);
 					} else {
 						errorMessage.textContent = data.error || "Something went wrong.";
-						errorModal.show();
+						errorToast.show();
 					}
 				})
 				.catch(err => {
 					errorMessage.textContent = "Server error: " + err;
-					errorModal.show();
+					errorToast.show();
 				});
-		});
-
-		goToDashboard.addEventListener('click', function() {
-			window.location.href = 'home.php';
 		});
 	</script>
 </body>
