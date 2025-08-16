@@ -1,5 +1,14 @@
 <?php
+session_start();
 $page = $_GET['page'] ?? 'dashboard';
+
+// Redirect to login if not logged in
+if (!isset($_SESSION['user_id'])) {
+  header("Location: index.php");
+  exit;
+}
+
+$currentUserRole = $_SESSION['user_role'] ?? 'guest';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -122,29 +131,31 @@ $page = $_GET['page'] ?? 'dashboard';
         </li>
 
         <!-- Administrator Dropdown -->
-        <li class="nav-item mb-2 ms-1">
-          <div class="accordion" id="accordionAdmins">
-            <div class="accordion-item border-0">
-              <h2 class="accordion-header" id="headingAdmins">
-                <button class="accordion-button collapsed bg-light text-start" type="button" data-bs-toggle="collapse"
-                  data-bs-target="#collapseAdmins" style="box-shadow: none;">
-                  Administrators
-                </button>
-              </h2>
-              <div id="collapseAdmins"
-                class="accordion-collapse collapse <?= in_array($page, ['administrator-list', 'new-administrator']) ? 'show' : '' ?>">
-                <div class="accordion-body py-1 px-2">
-                  <ul class="nav flex-column">
-                    <li><a class="nav-link small <?= $page === 'administrator-list' ? 'active' : '' ?>"
-                        href="?page=administrator-list">Administrator List</a></li>
-                    <li><a class="nav-link small <?= $page === 'new-administrator' ? 'active' : '' ?>"
-                        href="?page=new-administrator">New Administrator</a></li>
-                  </ul>
+        <?php if ($currentUserRole === 'Super Admin') : ?>
+          <li class="nav-item mb-2 ms-1">
+            <div class="accordion" id="accordionAdmins">
+              <div class="accordion-item border-0">
+                <h2 class="accordion-header" id="headingAdmins">
+                  <button class="accordion-button collapsed bg-light text-start" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseAdmins" style="box-shadow: none;">
+                    Administrators
+                  </button>
+                </h2>
+                <div id="collapseAdmins"
+                  class="accordion-collapse collapse <?= in_array($page, ['administrator-list', 'new-administrator']) ? 'show' : '' ?>">
+                  <div class="accordion-body py-1 px-2">
+                    <ul class="nav flex-column">
+                      <li><a class="nav-link small <?= $page === 'administrator-list' ? 'active' : '' ?>"
+                          href="?page=administrator-list">Administrator List</a></li>
+                      <li><a class="nav-link small <?= $page === 'new-administrator' ? 'active' : '' ?>"
+                          href="?page=new-administrator">New Administrator</a></li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </li>
+          </li>
+        <?php endif; ?>
       </ul>
     </div>
 
@@ -177,25 +188,27 @@ $page = $_GET['page'] ?? 'dashboard';
       <!-- Page Content -->
       <div class="p-4" id="pageContent">
         <?php
-        // Redirect "residents" to resident-list
+        // Redirect old routes
         if ($page === 'residents') {
           header("Location: ?page=resident-list");
           exit;
         }
-
         if ($page === 'administrators') {
           header("Location: ?page=administrator-list");
           exit;
         }
 
-        // Define safe/allowed pages
+        // Allowed pages
         $allowedPages = ['dashboard', 'resident-list', 'new-resident', 'update-resident', 'beneficiaries', 'administrator-list', 'new-administrator', 'update-administrator'];
 
         // Default to 404 if not allowed
-        $pageFile = in_array($page, $allowedPages)
-          ? "pages/$page.php"
-          : "pages/404.php";
+        $pageFile = in_array($page, $allowedPages) ? "pages/$page.php" : "pages/404.php";
 
+        // Backend protection: super_admin-only pages
+        $superAdminPages = ['administrator-list', 'new-administrator', 'update-administrator'];
+        if (in_array($page, $superAdminPages) && $currentUserRole !== 'Super Admin') {
+          $pageFile = "pages/403.php"; // create a 403 page
+        }
         // Inject the page
         include $pageFile;
         ?>
