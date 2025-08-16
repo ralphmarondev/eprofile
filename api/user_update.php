@@ -18,8 +18,8 @@ foreach ($required as $key) {
 $id = intval($_POST['id']);
 $full_name = trim($_POST['full_name']);
 $email = trim($_POST['email']);
-$role = strtolower(trim($_POST['role']));
-$gender = strtolower(trim($_POST['gender']));
+$role = trim($_POST['role']);
+$gender = trim($_POST['gender']);
 $password = $_POST['password'];
 $confirmPassword = $_POST['confirmPassword'];
 

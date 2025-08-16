@@ -27,16 +27,16 @@ $userId = intval($_GET['id']);
 					<label class="form-label">Role</label>
 					<select class="form-select" name="role" id="role" required>
 						<option value="">Choose...</option>
-						<option value="admin">Admin</option>
-						<option value="super_admin">Super Admin</option>
+						<option>Admin</option>
+						<option>Super Admin</option>
 					</select>
 				</div>
 				<div class="mb-3 col-md-6">
 					<label class="form-label">Gender</label>
 					<select class="form-select" name="gender" id="gender" required>
 						<option value="">Choose...</option>
-						<option value="male">Male</option>
-						<option value="female">Female</option>
+						<option>Male</option>
+						<option>Female</option>
 					</select>
 				</div>
 				<div class="mb-3 col-md-6">
@@ -54,8 +54,6 @@ $userId = intval($_GET['id']);
 			</div>
 		</form>
 	</div>
-
-
 </div>
 
 <style>
