@@ -91,8 +91,9 @@ $userId = intval($_GET['id']);
 		submitBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>Updating...`;
 
 		const formData = new FormData(form);
+		const id = <?= json_encode($userId) ?>;
 
-		fetch('api/user_update.php', {
+		fetch('api/user_update.php?id=${id}', {
 				method: 'POST',
 				body: formData
 			})
