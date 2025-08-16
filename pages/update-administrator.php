@@ -13,9 +13,10 @@ $userId = intval($_GET['id']);
 		<form id="updateAdminForm">
 			<h5 class="text-muted">Account Information</h5>
 			<div class="row">
+				<input type="hidden" name="id" id="user_id" value="<?= $userId ?>">
 				<div class="mb-3 col-md-6">
 					<label class="form-label">Full Name</label>
-					<input type="text" class="form-control" name="full name" id="full_name" placeholder="Enter full name"
+					<input type="text" class="form-control" name="full_name" id="full_name" placeholder="Enter full name"
 						required>
 				</div>
 				<div class="mb-3 col-md-6">
@@ -93,7 +94,7 @@ $userId = intval($_GET['id']);
 		const formData = new FormData(form);
 		const id = <?= json_encode($userId) ?>;
 
-		fetch('api/user_update.php?id=${id}', {
+		fetch('api/user_update.php', {
 				method: 'POST',
 				body: formData
 			})
