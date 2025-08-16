@@ -278,8 +278,9 @@
           <div class="modal-body">
             Resident deleted successfully!
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-pink" id="goToDashboard">Close</button>
+
+          <div class="modal-footer border-0">
+            <button type="button" class="btn btn-pink" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>

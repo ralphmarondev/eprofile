@@ -132,8 +132,9 @@
 				<div class="modal-body">
 					Account deleted successfully!
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-pink" id="goToDashboard">Close</button>
+
+				<div class="modal-footer border-0">
+					<button type="button" class="btn btn-pink" data-bs-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
@@ -302,9 +303,12 @@
 			})
 			.then(res => res.json())
 			.then(data => {
-				new bootstrap.Modal(document.getElementById('deleteModal')).hide();
+				const deleteModalInstance = bootstrap.Modal.getInstance(document.getElementById('deleteModal'));
+				if (deleteModalInstance) deleteModalInstance.hide();
+
 				if (data.success === "1") {
 					fetchFilteredUsers();
+
 					new bootstrap.Modal(document.getElementById('successModal')).show();
 				} else {
 					document.getElementById('errorMessage').innerText = data.error;
