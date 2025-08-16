@@ -286,7 +286,7 @@
 										<button onclick='openViewModal(${u.id})' class="btn btn-sm btn-success me-1">
 												<i class="bi bi-eye"></i>
 										</button>
-										<a href="home.php?page=update-user&id=${u.id}" class="btn btn-sm btn-primary me-1" title="Update">
+										<a href="home.php?page=update-administrator&id=${u.id}" class="btn btn-sm btn-primary me-1" title="Update">
 												<i class="bi bi-pencil-square"></i>
 										</a>
 										<button onclick="openDeleteModal(${u.id})" class="btn btn-sm btn-danger">

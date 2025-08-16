@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$full_name = trim($_POST['full_name']);
 	$email = trim($_POST['email']);
 	$role = strtolower(trim($_POST['role'])); // store as lowercase: 'admin' or 'super_admin'
-	$gender = trim($_POST['gender']);
+	$gender = strtolower(trim($_POST['gender']));
 	$password = $_POST['password'];
 	$confirmPassword = $_POST['confirmPassword'];
 
